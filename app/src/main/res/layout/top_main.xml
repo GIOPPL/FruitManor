@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/appMainColor"
+    android:id="@+id/rea_main"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="芜湖"
+        android:textSize="18dp"
+        android:layout_marginBottom="3dp"
+        android:textColor="@android:color/white"/>
+    <ImageView
+        android:layout_marginLeft="3dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/orientation_down"/>
+    <LinearLayout
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/home_search">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/search_grey"/>
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:hint="请输入商品名称"
+            android:textSize="15sp"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_marginRight="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="5dp"
+        android:src="@mipmap/scan_matrix_code"/>
+</LinearLayout>

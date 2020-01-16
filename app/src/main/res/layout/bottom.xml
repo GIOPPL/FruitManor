@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#fefefe"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/rg_main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtn_main_one"
+            style="@style/bottomStyle"
+            android:drawableTop="@drawable/rbtn_bottom_home"
+            android:text="首页"
+            android:textColor="@drawable/rbtn_bottom_text" />
+
+        <RadioButton
+            android:id="@+id/rbtn_main_two"
+            style="@style/bottomStyle"
+            android:drawableTop="@drawable/rbtn_bottom_classify"
+            android:text="分类"
+            android:textColor="@drawable/rbtn_bottom_text" />
+
+        <RadioButton
+            android:id="@+id/rbtn_main_three"
+            style="@style/bottomStyle"
+            android:drawableTop="@drawable/rbtn_bottom_shop_car"
+            android:text="购物车"
+            android:textColor="@drawable/rbtn_bottom_text" />
+
+        <RadioButton
+            android:id="@+id/rbtn_main_four"
+            style="@style/bottomStyle"
+            android:drawableTop="@drawable/rbtn_bottom_my"
+            android:text="我的"
+            android:textColor="@drawable/rbtn_bottom_text" />
+    </RadioGroup>
+</LinearLayout>
