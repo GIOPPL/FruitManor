@@ -12,7 +12,7 @@ import com.gioppl.fruitmanor.R
 class MyFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_learn, container, false)
+        return inflater.inflate(R.layout.fragment_my, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
