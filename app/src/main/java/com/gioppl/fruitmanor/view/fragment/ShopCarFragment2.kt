@@ -25,10 +25,11 @@ import kotlin.collections.ArrayList
 /**
  * Created by GIOPPL on 2017/10/8.
  */
-class ShopCarFragment : Fragment() {
+class ShopCarFragment2 : Fragment() {
 
     var mList = ArrayList<HomeFruitBean>()
     var mDelectList = ArrayList<Int>()
+    var mSelectList=ArrayList<Int>()
     var mRV: RecyclerView? = null
     var mAdapt: ShopCarAdapt? = null
 
@@ -150,6 +151,8 @@ class ShopCarFragment : Fragment() {
                             .setSingle(false)
                             .setOnClickBottomListener(object : OnClickBottomListener {
                                 override fun onPositiveClick() {
+                                    allPrice=0.0f
+                                    tv_all_price!!.text = "￥0"
                                     im_all_select!!.setImageDrawable(activity!!.getDrawable(R.mipmap.select_normal))
                                     Collections.sort(mDelectList);
                                     for (i in mDelectList.size - 1 downTo 0) {
@@ -182,6 +185,7 @@ class ShopCarFragment : Fragment() {
                     mList[i].isSelect = false
                 }
                 mAdapt!!.notifyDataSetChanged()
+                tv_all_price!!.text = "￥0"
                 if (isDelete) {//进入删除模式
                     isAllSelect = false
                     allPrice = 0.0f
@@ -189,7 +193,6 @@ class ShopCarFragment : Fragment() {
                     tv_delect!!.setTextColor(ContextCompat.getColor(activity!!, R.color.white))
                     tv_delect!!.background = RectBackGrand.kaleidoscope(60f, ContextCompat.getColor(activity!!, R.color.secondColor))
                     tv_all_price!!.visibility = View.GONE
-                    tv_all_price!!.text = "￥0"
                     tv_msg!!.text = "0件待删除商品"
                     tv_pay!!.text = "点击删除"
                     tv_pay!!.setTextColor(ContextCompat.getColor(activity!!, R.color.white))
@@ -221,12 +224,16 @@ class ShopCarFragment : Fragment() {
                     allPrice += price
                 else
                     allPrice -= price
+
+
                 val s = "￥" + String.format("%.2f", allPrice)
                 if (s == "￥-0.00" || s == "￥0.00") {
                     tv_all_price!!.text = "￥0"
                 } else {
                     tv_all_price!!.text = s
                 }
+
+
                 if (allPrice > 0.0) {
                     if (isDelete) {
                         tv_pay!!.setTextColor(activity!!.resources.getColor(R.color.white))
@@ -242,16 +249,14 @@ class ShopCarFragment : Fragment() {
                 }
 
                 if (isDelete) {
-                    tv_msg!!.text = "${mDelectList.size}件待删除商品"
                     if (isAdd) {
                         mDelectList.add(position)
                     } else {
                         mDelectList.remove(position)
                     }
-
+                    tv_msg!!.text = "${mDelectList.size}件待删除商品"
                 }
             }
-
         })
         mRV!!.setAdapter(mAdapt)
         mRV!!.setItemAnimator(DefaultItemAnimator())

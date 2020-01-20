@@ -11,7 +11,12 @@ public class HomeFruitBean {
     private int classify;
     private int totalSale;
 
-    public HomeFruitBean(String title, String subtitle, float price, String arriveTime, String discount, String imageUrl, int classify, int totalSale) {
+    private String objectId;
+
+    private boolean isSelect;//是否选中
+
+    public HomeFruitBean(String title, String subtitle, float price, String arriveTime, String discount,
+                         String imageUrl, int classify, int totalSale,String objectId) {
         this.title = title;
         this.subtitle = subtitle;
         this.price = price;
@@ -20,6 +25,24 @@ public class HomeFruitBean {
         this.imageUrl = imageUrl;
         this.classify = classify;
         this.totalSale = totalSale;
+        this.objectId=objectId;
+
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public int getTotalSale() {

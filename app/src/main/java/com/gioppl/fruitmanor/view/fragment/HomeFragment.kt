@@ -54,7 +54,8 @@ class HomeFragment : Fragment() {
                 mList.clear();
                 for (i in beanList!!) {
                     val bean = HomeFruitBean(i.serverData.title, i.serverData.subtitle, i.serverData.price.toFloat(),
-                            i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl,i.serverData.classify,i.serverData.totalSale)
+                            i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl,
+                            i.serverData.classify,i.serverData.totalSale,i.objectId)
                     mList.add(bean);
                 }
                 mAdapt!!.notifyDataSetChanged();

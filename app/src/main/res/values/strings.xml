@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FruitManor</string>
+    <string name="all_select">全选</string>
 </resources>
