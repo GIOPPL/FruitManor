@@ -15,9 +15,6 @@ import com.gioppl.fruitmanor.net.SearchFruitMassageCould
 import com.gioppl.fruitmanor.view.adapt.HomeFruitAdapt
 
 
-/**
- * Created by GIOPPL on 2017/10/8.
- */
 class HomeFragment : Fragment() {
     var mList=ArrayList<HomeFruitBean>()
     var mRV: RecyclerView? = null
@@ -34,14 +31,19 @@ class HomeFragment : Fragment() {
 
 //        NetFileTools.getInstance().upload("background")
 
-//        val uploadFruitMassageCould=UploadFruitMassageCould(activity!!,object : UploadFruitMassageCould.NetData{
+
+
+//        val uploadFruitMassageCould= UploadFruitMassageCould(activity!!,object : UploadFruitMassageCould.NetData{
 //            override fun getData(msg: String?) {
 //
 //            }
 //
 //        });
-//        val bean=HomeFruitBean("四川黄心猕猴桃(单果70-90g)","黄金果肉 咬上一口 香甜细糯",29.9f,"次日达","7折","http://lc-d2693j76.cn-n1.lcfile.com/52fb246cdb7d2b90006b/cheer.jpg");
-//        uploadFruitMassageCould.uploadMassage(bean);
+//        for (i in 0..20){
+//            val bean=HomeFruitBean("$i","黄金果肉 咬上一口 香甜细糯",29.9f,"次日达","7折","http://lc-d2693j76.cn-n1.lcfile.com/52fb246cdb7d2b90006b/cheer.jpg");
+//            uploadFruitMassageCould.uploadMassage(bean);
+//        }
+
 
         setAdaptManager()
     }
@@ -51,7 +53,8 @@ class HomeFragment : Fragment() {
             override fun getData(beanList: java.util.ArrayList<NetFruitBean>?) {
                 mList.clear();
                 for (i in beanList!!) {
-                    val bean = HomeFruitBean(i.serverData.title, i.serverData.subtitle, i.serverData.price.toFloat(), i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl)
+                    val bean = HomeFruitBean(i.serverData.title, i.serverData.subtitle, i.serverData.price.toFloat(),
+                            i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl,i.serverData.classify,i.serverData.totalSale)
                     mList.add(bean);
                 }
                 mAdapt!!.notifyDataSetChanged();

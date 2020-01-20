@@ -8,13 +8,34 @@ public class HomeFruitBean {
     private String discount;
     private String imageUrl;
 
-    public HomeFruitBean(String title, String subtitle, float price, String arriveTime, String discount, String imageUrl) {
+    private int classify;
+    private int totalSale;
+
+    public HomeFruitBean(String title, String subtitle, float price, String arriveTime, String discount, String imageUrl, int classify, int totalSale) {
         this.title = title;
         this.subtitle = subtitle;
         this.price = price;
         this.arriveTime = arriveTime;
         this.discount = discount;
         this.imageUrl = imageUrl;
+        this.classify = classify;
+        this.totalSale = totalSale;
+    }
+
+    public int getTotalSale() {
+        return totalSale;
+    }
+
+    public void setTotalSale(int totalSale) {
+        this.totalSale = totalSale;
+    }
+
+    public int getClassify() {
+        return classify;
+    }
+
+    public void setClassify(int classify) {
+        this.classify = classify;
     }
 
     public float getPrice() {
@@ -64,4 +85,6 @@ public class HomeFruitBean {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    
 }

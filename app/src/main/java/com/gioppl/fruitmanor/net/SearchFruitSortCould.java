@@ -9,7 +9,7 @@ import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.CloudQueryCallback;
-import com.gioppl.fruitmanor.bean.NetFruitBean;
+import com.gioppl.fruitmanor.bean.FruitSortBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,27 +21,27 @@ import java.util.List;
  * Created by GIOPPL on 2017/4/30.
  */
 
-public class SearchFruitMassageCould {
+public class SearchFruitSortCould {
     private NetData mCircleData;
     private Context mContext;
-    private ArrayList<NetFruitBean> beanList;
+    private ArrayList<FruitSortBean> beanList;
 
-    public SearchFruitMassageCould(Context mContext, NetData mCircleData){
+    public SearchFruitSortCould(Context mContext, NetData mCircleData){
         this.mContext=mContext;
         this.mCircleData=mCircleData;
     }
 
     public  void getNetDate(){
-        String cql="select * from Fruit";
+        String cql="select * from FruitClassify";
         AVQuery.doCloudQueryInBackground(cql, new CloudQueryCallback<AVCloudQueryResult>() {
             @Override
             public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                 if (e!=null){
-                    Log.i("Error",e.getMessage()+"--"+e.getCode());
+                    Log.i("Error","获取商品种类失败："+e.getMessage()+"--"+e.getCode());
                 }else {
-                    Log.i("Success"+this.getClass().getName(),"获取首页特价商品成功");
-                    String s1=avCloudQueryResult.getResults().toString();
-                    beanList=FormatNetDataBean(s1);
+                    Log.i("Success"+this.getClass().getName(),"获取商品种类成功");
+                    String s=avCloudQueryResult.getResults().toString();
+                    beanList=FormatNetDataBean(s);
                     Message msg=new Message();
                     msg.arg1=0x9;
                     msg.obj=beanList;
@@ -51,22 +51,22 @@ public class SearchFruitMassageCould {
         });
     }
 
-    private ArrayList<NetFruitBean> FormatNetDataBean(String S_circle) {
-        ArrayList<NetFruitBean> list;
-        Type listType = new TypeToken<List<NetFruitBean>>() {}.getType();
+    private ArrayList<FruitSortBean> FormatNetDataBean(String S_circle) {
+        ArrayList<FruitSortBean> list;
+        Type listType = new TypeToken<List<FruitSortBean>>() {}.getType();
         Gson gson=new Gson();
         list=gson.fromJson(S_circle, listType);
         return list;
     }
 
     public interface NetData{
-        void getData(ArrayList<NetFruitBean> beanList);
+        void getData(ArrayList<FruitSortBean> beanList);
     }
     private Handler mHandle=new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.arg1==0x9){
-                mCircleData.getData((ArrayList<NetFruitBean>) msg.obj);
+                mCircleData.getData((ArrayList<FruitSortBean>) msg.obj);
             }
             return false;
         }

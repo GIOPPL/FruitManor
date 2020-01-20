@@ -8,4 +8,5 @@
     <color name="appMainColor">#FFC107</color>
     <color name="firstColor">#FFC107</color>
     <color name="secondColor">#03A9F4</color>
+    <color name="noFocusColor">#aaaaaa</color>
 </resources>

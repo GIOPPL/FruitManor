@@ -2,32 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F2F2"
     android:orientation="vertical">
     <include layout="@layout/top_classify"/>
     <LinearLayout
-        android:paddingTop="5dp"
+        android:background="@drawable/classify_rv_ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/classify_rv_ffffff"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_classify"
-            android:layout_width="0dp"
+            <View
+                android:id="@+id/view_select"
+                android:background="@color/firstColor"
+                android:layout_width="7dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:textColor="@color/secondColor"
+                android:paddingLeft="10dp"
+                android:id="@+id/tv_all"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="全部"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_sort_synthesize"
+                android:paddingRight="20dp"
+                android:textColor="@color/secondColor"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="综合"/>
+            <TextView
+                android:id="@+id/tv_total_sale"
+                android:paddingRight="20dp"
+                android:textColor="#aaaaaa"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="销量"/>
+            <TextView
+                android:textColor="#aaaaaa"
+                android:id="@+id/tv_sort_price"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="价格"/>
+            <ImageView
+                android:id="@+id/im_sort_price"
+                android:layout_marginRight="20dp"
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/sort_normal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#fff"
-            android:scrollbars="none" />
 
-        <View
-            android:layout_width="0.3dp"
-            android:layout_height="match_parent"
-            android:background="#EEECEC" />
+            android:orientation="horizontal">
 
-        <FrameLayout
-            android:id="@+id/fragment_classify"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_classify"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="0.3dp"
+                android:layout_height="match_parent"
+                android:background="#EEECEC" />
+
+            <FrameLayout
+                android:id="@+id/fragment_description"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

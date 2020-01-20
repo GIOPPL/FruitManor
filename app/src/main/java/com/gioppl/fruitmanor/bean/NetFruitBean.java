@@ -3,20 +3,21 @@ package com.gioppl.fruitmanor.bean;
 import com.google.gson.annotations.SerializedName;
 
 public class NetFruitBean {
+
     @SerializedName("@type")
-    private String _$Type58; // FIXME check this code
+    private String _$Type141; // FIXME check this code
     private String objectId;
     private String updatedAt;
     private String createdAt;
     private String className;
     private ServerDataBean serverData;
 
-    public String get_$Type58() {
-        return _$Type58;
+    public String get_$Type141() {
+        return _$Type141;
     }
 
-    public void set_$Type58(String _$Type58) {
-        this._$Type58 = _$Type58;
+    public void set_$Type141(String _$Type141) {
+        this._$Type141 = _$Type141;
     }
 
     public String getObjectId() {
@@ -61,20 +62,23 @@ public class NetFruitBean {
 
     public static class ServerDataBean {
         @SerializedName("@type")
-        private String _$Type82; // FIXME check this code
+        private String _$Type95; // FIXME check this code
         private String arriveTime;
+        private int classify;
         private float price;
         private String imageUrl;
         private String subtitle;
         private String discount;
+        private int id;
         private String title;
+        private int totalSale;
 
-        public String get_$Type82() {
-            return _$Type82;
+        public String get_$Type95() {
+            return _$Type95;
         }
 
-        public void set_$Type82(String _$Type82) {
-            this._$Type82 = _$Type82;
+        public void set_$Type95(String _$Type95) {
+            this._$Type95 = _$Type95;
         }
 
         public String getArriveTime() {
@@ -83,6 +87,14 @@ public class NetFruitBean {
 
         public void setArriveTime(String arriveTime) {
             this.arriveTime = arriveTime;
+        }
+
+        public int getClassify() {
+            return classify;
+        }
+
+        public void setClassify(int classify) {
+            this.classify = classify;
         }
 
         public float getPrice() {
@@ -117,12 +129,28 @@ public class NetFruitBean {
             this.discount = discount;
         }
 
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
         public String getTitle() {
             return title;
         }
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public int getTotalSale() {
+            return totalSale;
+        }
+
+        public void setTotalSale(int totalSale) {
+            this.totalSale = totalSale;
         }
     }
 }

@@ -43,6 +43,6 @@ class ClassifyAdapt(private var mList: ArrayList<ClassifyButtonInfo>, private va
         fun back(position: Int)
     }
 
-    public class ClassifyButtonInfo(public var text:String ="火龙果",public var textColor: Int=android.R.color.black,public var flagColor:Int=android.R.color.white)
+    public class ClassifyButtonInfo(public var classifyNum: Int=0,public var text:String ="火龙果",public var textColor: Int=android.R.color.black,public var flagColor:Int=android.R.color.white)
 
 }

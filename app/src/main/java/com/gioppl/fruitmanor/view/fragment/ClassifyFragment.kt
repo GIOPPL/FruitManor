@@ -4,21 +4,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.R
+import com.gioppl.fruitmanor.bean.FruitSortBean
+import com.gioppl.fruitmanor.net.SearchFruitSortCould
 import com.gioppl.fruitmanor.view.adapt.ClassifyAdapt
 import java.util.*
+
 
 /**
  * Created by GIOPPL on 2017/10/8.
  */
 class ClassifyFragment : Fragment() {
     private val mList = ArrayList<ClassifyAdapt.ClassifyButtonInfo>();
-    var rv: RecyclerView? = null;
-    var mAdapt: ClassifyAdapt? = null
+    private var rv: RecyclerView? = null;
+    private var mAdapt: ClassifyAdapt? = null
+    private var fragment:ClassifyFragmentDescription?=null
+
+    private var tv_all:TextView?=null
+    private var tv_sort_synthesize:TextView?=null
+    private var tv_total_sale:TextView?=null
+    private var tv_sort_price:TextView?=null
+    private var im_sort_price: ImageView?=null
+    private var view_select:View?=null
+    private var sortDown=false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_classify, container, false)
@@ -28,17 +43,108 @@ class ClassifyFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initDate()
         initView()
+
     }
 
+
+    private fun getGoodsSort() {
+        val leanCouldNet= SearchFruitSortCould(activity!!, object : SearchFruitSortCould.NetData {
+            override fun getData(beanList: ArrayList<FruitSortBean>?) {
+                mList.clear()
+                for (i in 0 until  beanList!!.size){
+                    val bean=beanList[i].serverData;
+                    mList.add(ClassifyAdapt.ClassifyButtonInfo(text = bean.sort,classifyNum = bean.classifyNum))
+                }
+                mAdapt!!.notifyDataSetChanged();
+            }
+        });
+        leanCouldNet.getNetDate();
+    }
+
+
     private fun initDate() {
-        mList.add(ClassifyAdapt.ClassifyButtonInfo(text = "全部",flagColor = R.color.firstColor,textColor = R.color.secondColor));
-        mList.add(ClassifyAdapt.ClassifyButtonInfo(text = "草莓"))
-        mList.add(ClassifyAdapt.ClassifyButtonInfo(text = "椰子"))
-        mList.add(ClassifyAdapt.ClassifyButtonInfo(text = "李子"))
-        mList.add(ClassifyAdapt.ClassifyButtonInfo(text = "西瓜"))
+        getGoodsSort()
+    }
+
+    private fun initViewColor(){
+        tv_all!!.setTextColor(activity!!.resources.getColor(R.color.noFocusColor))
+        tv_sort_synthesize!!.setTextColor(activity!!.resources.getColor(R.color.noFocusColor))
+        tv_sort_price!!.setTextColor(activity!!.resources.getColor(R.color.noFocusColor))
+        tv_total_sale!!.setTextColor(activity!!.resources.getColor(R.color.noFocusColor))
+        im_sort_price!!.setImageDrawable(activity!!.getDrawable(R.mipmap.sort_normal))
+        view_select!!.setBackgroundColor(activity!!.resources.getColor(android.R.color.white))
     }
 
     private fun initView() {
+        tv_all=activity!!.findViewById(R.id.tv_all);
+        tv_sort_price=activity!!.findViewById(R.id.tv_sort_price);
+        tv_sort_synthesize=activity!!.findViewById(R.id.tv_sort_synthesize);
+        tv_total_sale=activity!!.findViewById(R.id.tv_total_sale);
+        im_sort_price=activity!!.findViewById(R.id.im_sort_price);
+        view_select=activity!!.findViewById(R.id.view_select);
+
+        tv_all!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                tv_all!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                tv_sort_synthesize!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                fragment!!.all()
+            }
+        })
+        tv_sort_synthesize!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                tv_all!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                tv_sort_synthesize!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                fragment!!.synthesize()
+            }
+
+        })
+        tv_total_sale!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                tv_total_sale!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                fragment!!.totalSale()
+            }
+
+        })
+        tv_sort_price!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                tv_sort_price!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                if (sortDown){
+                    im_sort_price!!.setImageDrawable(activity!!.getDrawable(R.mipmap.sort_down))
+                    fragment!!.sortPrice(true)
+                }else{
+                    im_sort_price!!.setImageDrawable(activity!!.getDrawable(R.mipmap.sort_up))
+                    fragment!!.sortPrice(false)
+                }
+                sortDown=!sortDown
+
+            }
+
+        })
+        im_sort_price!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                tv_sort_price!!.setTextColor(activity!!.resources.getColor(R.color.secondColor))
+                if (sortDown){
+                    im_sort_price!!.setImageDrawable(activity!!.getDrawable(R.mipmap.sort_down))
+                }else{
+                    im_sort_price!!.setImageDrawable(activity!!.getDrawable(R.mipmap.sort_up))
+                }
+                sortDown=!sortDown
+            }
+
+        })
+        view_select!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                initViewColor()
+                view_select!!.setBackgroundColor(activity!!.resources.getColor(R.color.firstColor))
+            }
+
+        })
+
         rv = activity!!.findViewById(R.id.rv_classify)
         val layoutManager = LinearLayoutManager(context)
         rv!!.layoutManager = layoutManager
@@ -52,9 +158,16 @@ class ClassifyFragment : Fragment() {
                 mList[position].flagColor=R.color.firstColor
                 mList[position].textColor=R.color.secondColor
                 mAdapt!!.notifyDataSetChanged()
+                fragment!!.refreshData(position)
             }
         })
-        rv!!.setAdapter(mAdapt)
-        rv!!.setItemAnimator(DefaultItemAnimator())
+        rv!!.adapter = mAdapt
+        rv!!.itemAnimator = DefaultItemAnimator()
+
+        fragment=ClassifyFragmentDescription()
+        val fragmentTransaction= childFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_description, fragment!!)
+        fragmentTransaction.commit()
+
     }
 }
