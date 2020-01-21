@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.LoginActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="back"
+        android:src="@mipmap/arraw_letf_first_color"/>
+    <TextView
+        android:layout_margin="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登陆"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="50dp"
+            android:orientation="horizontal">
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="#555555"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机"/>
+
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/ed_login_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入手机号"
+                    android:textColorHint="#aaaaaa"
+                    android:textSize="15sp" />
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/noFocusColor"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:textSize="15sp"
+                android:textColor="#555555"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"/>
+
+            <EditText
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ed_login_psw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:textColorHint="#aaaaaa"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/noFocusColor"/>
+
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_login"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rect_second_color_10dp"
+            android:clickable="true"
+            android:onClick="login"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="登陆"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:onClick="register"
+            android:text="点击注册"
+            android:textColor="@color/noFocusColor"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</LinearLayout>

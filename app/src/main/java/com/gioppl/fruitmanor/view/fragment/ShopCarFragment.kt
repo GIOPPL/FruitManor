@@ -1,5 +1,6 @@
 package com.gioppl.fruitmanor.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +18,12 @@ import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.tool.CocoDialog
 import com.gioppl.fruitmanor.tool.CocoDialog.OnClickBottomListener
 import com.gioppl.fruitmanor.tool.RectBackGrand
+import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
+import com.gioppl.fruitmanor.view.activity.LoginActivity
 import com.gioppl.fruitmanor.view.adapt.ShopCarAdapt
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-/**
- * Created by GIOPPL on 2017/10/8.
- */
 class ShopCarFragment : Fragment() {
 
     var mList = ArrayList<HomeFruitBean>()
@@ -75,9 +74,15 @@ class ShopCarFragment : Fragment() {
         im_all_select = activity!!.findViewById(R.id.im_all_select)
         tv_msg = activity!!.findViewById(R.id.tv_msg)
 
+        if (SharedPreferencesUtils.getInstance().getData("loginStatus",false) as Boolean){
+            ll_login!!.visibility=View.GONE
+        }else{
+            ll_login!!.visibility=View.VISIBLE
+        }
+
         ll_login!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
+                startActivity(Intent(activity!!,LoginActivity::class.java))
             }
         })
         ll_all_select!!.setOnClickListener(object : View.OnClickListener {

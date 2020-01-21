@@ -1,4 +1,4 @@
-package com.gioppl.fruitmanor.view;
+package com.gioppl.fruitmanor.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,8 +21,16 @@ public class BaseActivity extends AppCompatActivity  {
     public static void Strawberry(String className,String tag,String massage){
         Log.i(className+"- -"+tag,massage);
     }
-
-    public static void mango(Context context,String mag){
+    public void strawberry(Object object,String tag,String massage){
+        Log.i(object.getClass().getName()+"- -"+tag,massage);
+    }
+    public void strawberry(Object object,String massage){
+        Log.i(object.getClass().getName(),massage);
+    }
+    public static void Mango(Context context,String mag){
+        Toast.makeText(context,mag,Toast.LENGTH_SHORT).show();
+    }
+    public static void mogo(Context context,String mag){
         Toast.makeText(context,mag,Toast.LENGTH_SHORT).show();
     }
 }

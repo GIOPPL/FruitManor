@@ -35,7 +35,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@mipmap/arrow_left" />
+            android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
     <LinearLayout

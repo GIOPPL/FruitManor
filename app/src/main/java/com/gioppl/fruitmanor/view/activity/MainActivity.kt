@@ -1,4 +1,4 @@
-package com.gioppl.fruitmanor.view
+package com.gioppl.fruitmanor.view.activity
 
 import android.os.Bundle
 import android.widget.RadioGroup

@@ -9,7 +9,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
 import com.gioppl.fruitmanor.bean.HomeFruitBean;
 import com.gioppl.fruitmanor.bean.NetFruitBean;
-import com.gioppl.fruitmanor.view.BaseActivity;
+import com.gioppl.fruitmanor.view.activity.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

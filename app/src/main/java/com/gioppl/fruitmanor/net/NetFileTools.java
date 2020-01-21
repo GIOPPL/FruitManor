@@ -5,7 +5,7 @@ import android.os.Environment;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.SaveCallback;
-import com.gioppl.fruitmanor.view.BaseActivity;
+import com.gioppl.fruitmanor.view.activity.BaseActivity;
 
 import java.io.FileNotFoundException;
 

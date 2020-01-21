@@ -12,4 +12,5 @@
     <color name="unfocusColorSecond">#eeeeee</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="firstColorTint">#55FDE6A0</color>
 </resources>
