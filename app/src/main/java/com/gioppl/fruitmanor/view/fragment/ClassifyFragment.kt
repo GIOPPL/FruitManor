@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.FruitSortBean
+import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.SearchFruitSortCould
 import com.gioppl.fruitmanor.view.adapt.ClassifyAdapt
 import java.util.*
@@ -20,7 +20,7 @@ import java.util.*
 /**
  * Created by GIOPPL on 2017/10/8.
  */
-class ClassifyFragment : Fragment() {
+class ClassifyFragment : BaseFragment() {
     private val mList = ArrayList<ClassifyAdapt.ClassifyButtonInfo>();
     private var rv: RecyclerView? = null;
     private var mAdapt: ClassifyAdapt? = null
@@ -37,6 +37,10 @@ class ClassifyFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_classify, container, false)
+    }
+
+    override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify, statusCode: Int, msg: Any?) {
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -1,33 +1,43 @@
 package com.gioppl.fruitmanor.view.fragment
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.bean.NetFruitBean
+import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.SearchFruitMassageCould
+import com.gioppl.fruitmanor.view.activity.BaseActivity
 import com.gioppl.fruitmanor.view.adapt.HomeFruitAdapt
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     var mList=ArrayList<HomeFruitBean>()
     var mRV: RecyclerView? = null
     var mAdapt: HomeFruitAdapt? = null
+    var rl_home: RelativeLayout?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify, statusCode: Int, msg: Any?) {
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         getData()
+
 
 //        NetFileTools.getInstance().upload("background")
 
@@ -65,11 +75,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun setAdaptManager() {
-        mRV=activity!!.findViewById(R.id.rv_policy)
+        rl_home=activity!!.findViewById(R.id.ll_home)
+        mRV=activity!!.findViewById(R.id.rv_home)
         val layoutManager = LinearLayoutManager(context)
         mRV!!.layoutManager=layoutManager
         mRV!!.setHasFixedSize(true)
-        mAdapt = HomeFruitAdapt(mList, context!!)
+        mAdapt = HomeFruitAdapt(mList, context!!,object :HomeFruitAdapt.HomeClickCallBack{
+            override fun addToShopCar(imageView: ImageView, point: Point, position: Int) {
+                val goods = ImageView(activity)
+                goods.setImageDrawable(imageView.drawable)
+                val params = RelativeLayout.LayoutParams(200, 200)
+//                rl_home!!.addView(goods, params)
+
+                BaseActivity.Strawberry(this,point.x.toString()+","+point.y)
+            }
+
+            override fun lookDescription(position: Int) {
+
+            }
+        })
         mRV!!.setAdapter(mAdapt)
         mRV!!.setItemAnimator(DefaultItemAnimator())
     }

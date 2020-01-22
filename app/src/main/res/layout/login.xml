@@ -46,6 +46,7 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:hint="请输入手机号"
+                    android:text="17695564750"
                     android:textColorHint="#aaaaaa"
                     android:textSize="15sp" />
         </LinearLayout>
@@ -68,6 +69,8 @@
                 android:text="密码"/>
 
             <EditText
+                android:text="123"
+                android:inputType="numberPassword"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/ed_login_psw"
                 android:layout_width="match_parent"
@@ -109,5 +112,11 @@
             android:textColor="@color/noFocusColor"
             android:textSize="13sp" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+    </LinearLayout>
 </LinearLayout>

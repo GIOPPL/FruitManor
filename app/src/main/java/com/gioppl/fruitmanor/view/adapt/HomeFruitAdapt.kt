@@ -1,6 +1,7 @@
 package com.gioppl.fruitmanor.view.adapt
 
 import android.content.Context
+import android.graphics.Point
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,9 @@ import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 
 
-class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var context: Context):RecyclerView.Adapter<HomeFruitAdapt.MyFruitViewHolder>(){
+class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var context: Context,private var homeClickCallBack:HomeClickCallBack)
+    :RecyclerView.Adapter<HomeFruitAdapt.MyFruitViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.home_friut_rv_item,parent,false))
 
@@ -29,6 +32,15 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
 
         val uri = Uri.parse(mList!![position].imageUrl)
         holder.sim_cherry!!.setImageURI(uri)
+
+        holder.im_add!!.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                val location1 = IntArray(2)
+                holder.im_add!!.getLocationInWindow(location1)
+
+                homeClickCallBack.addToShopCar(holder.im_add!!,Point(location1[0],location1[1]),position)
+            }
+        })
     }
 
     class MyFruitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -53,5 +65,10 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
     public fun refreshData(mList:ArrayList<HomeFruitBean>){
         this.mList!!.clear();
         this.mList!!.addAll(mList);
+    }
+
+    public interface HomeClickCallBack{
+        fun addToShopCar(imageView: ImageView,point:Point,position: Int)
+        fun lookDescription(position:Int)
     }
 }

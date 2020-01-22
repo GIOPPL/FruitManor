@@ -9,12 +9,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
+import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.tool.CocoDialog
 import com.gioppl.fruitmanor.tool.CocoDialog.OnClickBottomListener
 import com.gioppl.fruitmanor.tool.RectBackGrand
@@ -24,7 +24,9 @@ import com.gioppl.fruitmanor.view.adapt.ShopCarAdapt
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ShopCarFragment : Fragment() {
+class ShopCarFragment : BaseFragment(){
+
+
 
     var mList = ArrayList<HomeFruitBean>()
     var mDelectList = ArrayList<Int>()
@@ -48,6 +50,16 @@ class ShopCarFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_shop_car, container, false)
+    }
+
+    override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify, statusCode: Int, msg: Any?) {
+        if (broadCastClassify== MainBroadcastReceiver.BroadCastClassify.LOGIN){
+            if (statusCode== MainBroadcastReceiver.STATUS_CODE_0X01){
+                ll_login!!.visibility=View.GONE
+            }else{
+                ll_login!!.visibility=View.VISIBLE
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -261,4 +273,6 @@ class ShopCarFragment : Fragment() {
         mRV!!.setAdapter(mAdapt)
         mRV!!.setItemAnimator(DefaultItemAnimator())
     }
+
+
 }

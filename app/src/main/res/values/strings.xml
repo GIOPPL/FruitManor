@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">奇异果园</string>
     <string name="all_select">全选</string>
+    <string name="LOGIN_CHANGED">com.gioppl.LOGIN_CHANGED</string>
 </resources>

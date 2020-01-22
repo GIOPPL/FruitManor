@@ -7,22 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.gioppl.fruitmanor.R
+import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 import com.gioppl.fruitmanor.view.activity.LoginActivity
 
-/**
- * Created by GIOPPL on 2017/10/8.
- */
-class MyFragment : Fragment() {
+class MyFragment : BaseFragment() {
     var loginStatus=false
     private var sim_photo:SimpleDraweeView?=null
     private var tv_nick_name:TextView?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_my, container, false)
+    }
+
+    override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify, statusCode: Int, msg: Any?) {
+        if (broadCastClassify== MainBroadcastReceiver.BroadCastClassify.LOGIN){
+            if (statusCode== MainBroadcastReceiver.STATUS_CODE_0X01){
+                tv_nick_name!!.text=SharedPreferencesUtils.getInstance().getData("nickName","（未命名）") as String
+                sim_photo!!.setImageURI(Uri.parse(SharedPreferencesUtils.getInstance().getData("imageUrl","http://lc-9AEi5aIp.cn-n1.lcfile.com/865bab85a1a7d6f432d6/ic_kiwi.png")as String))
+            }else{
+                tv_nick_name!!.text="登陆/注册"
+                sim_photo!!.setImageURI(Uri.parse("res://mipmap/${R.mipmap.ic_kiwi}"))
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

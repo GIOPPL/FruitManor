@@ -5,6 +5,7 @@ import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.gioppl.fruitmanor.R
+import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.tool.BanSlidingViewPager
 import com.gioppl.fruitmanor.tool.PermissionUtils
 import com.gioppl.fruitmanor.view.fragment.ClassifyFragment
@@ -16,6 +17,10 @@ class MainActivity : BaseActivity() {
     var vp: BanSlidingViewPager? = null
     var mRadioGroup: RadioGroup? = null
     var mPagerList = ArrayList<Fragment>()
+
+    override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify?, statusCode: Int, msg: Any?) {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,4 +62,8 @@ class MainActivity : BaseActivity() {
         }
         vp!!.adapter = pagerAdapt
     }
+
+//    public interface BroadCastCallback{
+//        fun onChangeListener(broadCastClassify: BroadCastClassify, statusCode: Int, msg: Any?)
+//    }
 }

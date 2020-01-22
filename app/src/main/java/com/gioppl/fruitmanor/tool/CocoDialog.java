@@ -52,6 +52,9 @@ public class CocoDialog extends Dialog {
     private String positive,negtive ;
     private int imageResId = -1 ;
 
+    private String positiveText="确定";
+    private String nagetiveText="取消";
+
     /**
      * 底部是否只有一个按钮
      */
@@ -113,12 +116,12 @@ public class CocoDialog extends Dialog {
         if (!TextUtils.isEmpty(positive)) {
             positiveBn.setText(positive);
         }else {
-            positiveBn.setText("确定");
+            positiveBn.setText(positiveText);
         }
         if (!TextUtils.isEmpty(negtive)) {
             negtiveBn.setText(negtive);
         }else {
-            negtiveBn.setText("取消");
+            negtiveBn.setText(nagetiveText);
         }
 
         if (imageResId!=-1){
@@ -227,6 +230,12 @@ public class CocoDialog extends Dialog {
 
     public CocoDialog setImageResId(int imageResId) {
         this.imageResId = imageResId;
+        return this ;
+    }
+
+    public CocoDialog setText(String positiveText,String nagetiveText) {
+        this.positiveText = positiveText;
+        this.nagetiveText=nagetiveText;
         return this ;
     }
 
