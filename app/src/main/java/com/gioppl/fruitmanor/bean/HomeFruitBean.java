@@ -29,6 +29,10 @@ public class HomeFruitBean {
 
     }
 
+    public HomeFruitBean() {
+
+    }
+
     public boolean isSelect() {
         return isSelect;
     }

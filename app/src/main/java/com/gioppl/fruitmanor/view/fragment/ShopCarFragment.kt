@@ -1,6 +1,7 @@
 package com.gioppl.fruitmanor.view.fragment
 
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,40 +13,45 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gioppl.fruitmanor.MyApplication
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
+import com.gioppl.fruitmanor.sql.MyDbHelper
+import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.CocoDialog
 import com.gioppl.fruitmanor.tool.CocoDialog.OnClickBottomListener
 import com.gioppl.fruitmanor.tool.RectBackGrand
+import com.gioppl.fruitmanor.tool.RefreshableViewList
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
+import com.gioppl.fruitmanor.view.activity.BaseActivity
 import com.gioppl.fruitmanor.view.activity.LoginActivity
 import com.gioppl.fruitmanor.view.adapt.ShopCarAdapt
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ShopCarFragment : BaseFragment(){
+class ShopCarFragment : BaseFragment() {
+    private var rvl: RefreshableViewList? = null
+    private var mList = ArrayList<HomeFruitBean>()
+    private var mDelectList = ArrayList<Int>()
+    private var mRV: RecyclerView? = null
+    private var mAdapt: ShopCarAdapt? = null
 
+    private var ll_login: LinearLayout? = null
+    private var ll_all_select: LinearLayout? = null
+    private var tv_all_price: TextView? = null
+    private var tv_pay: TextView? = null
+    private var tv_delect: TextView? = null
+    private var im_all_select: ImageView? = null
+    private var tv_msg: TextView? = null
 
-
-    var mList = ArrayList<HomeFruitBean>()
-    var mDelectList = ArrayList<Int>()
-    var mRV: RecyclerView? = null
-    var mAdapt: ShopCarAdapt? = null
-
-    var ll_login: LinearLayout? = null
-    var ll_all_select: LinearLayout? = null
-    var tv_all_price: TextView? = null
-    var tv_pay: TextView? = null
-    var tv_delect: TextView? = null
-    var im_all_select: ImageView? = null
-    var tv_msg: TextView? = null
-
-    var isAllSelect = false
-    var isDelete = false
+    private var isAllSelect = false
+    private var isDelete = false
 
     var allPrice = 0.0f
 
+
+    private var mDbHelper: MyDbHelper? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -53,31 +59,71 @@ class ShopCarFragment : BaseFragment(){
     }
 
     override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify, statusCode: Int, msg: Any?) {
-        if (broadCastClassify== MainBroadcastReceiver.BroadCastClassify.LOGIN){
-            if (statusCode== MainBroadcastReceiver.STATUS_CODE_0X01){
-                ll_login!!.visibility=View.GONE
-            }else{
-                ll_login!!.visibility=View.VISIBLE
+        if (broadCastClassify == MainBroadcastReceiver.BroadCastClassify.LOGIN) {
+            if (statusCode == MainBroadcastReceiver.STATUS_CODE_0X01) {//已经登陆
+                ll_login!!.visibility = View.GONE
+                getGoodsFromDb()
+            } else {
+                ll_login!!.visibility = View.VISIBLE
             }
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mDbHelper=MyApplication.getInstance().dbHelper
         initView()
-        for (i in 0..10) {
-            val bean = HomeFruitBean("$i", "黄金果肉 咬上一口 香甜细糯", 29.9f,
-                    "次日达", "7折", "http://lc-d2693j76.cn-n1.lcfile.com/52fb246cdb7d2b90006b/cheer.jpg",
-                    0, 100, "11111");
-            bean.isSelect = false;
-            mList.add(bean)
-        }
+        initData()
         setAdaptManager()
         mAdapt!!.notifyDataSetChanged()
     }
 
+    private fun initData() {
+        val isLogin = SharedPreferencesUtils.getInstance().getData("loginStatus", false) as Boolean
+        if (isLogin) {
+            ll_login!!.visibility = View.GONE
+            getGoodsFromDb()
+        } else {
+            ll_login!!.visibility = View.VISIBLE
+        }
+
+
+    }
+
+    private  fun getGoodsFromDb(){
+        mList.clear()
+        val sql="select * from ${Table.ShopCartTable.TABLE_NAME}"
+        BaseActivity.Strawberry(this,"查询数据库的商品："+sql)
+        val mCursor: Cursor = mDbHelper!!.exeSql(sql)
+        while (mCursor.moveToNext()) {
+            val bean=HomeFruitBean()
+            bean.objectId=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.GOODS_ID))
+            bean.classify=mCursor.getInt(mCursor.getColumnIndex(Table.ShopCartTable.CLASSIFY))
+            bean.price=mCursor.getFloat(mCursor.getColumnIndex(Table.ShopCartTable.PRICE))
+            bean.imageUrl=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.IMAGE_URL))
+            bean.subtitle=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.SUBTITLE))
+            bean.title=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.TITLE))
+            bean.discount=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.DISCOUNT))
+            bean.totalSale=mCursor.getInt(mCursor.getColumnIndex(Table.ShopCartTable.TOTAL_SALE))
+            mList.add(bean)
+        }
+        mAdapt!!.notifyDataSetChanged()
+    }
 
     private fun initView() {
+        rvl = activity!!.findViewById(R.id.rvl_shop)
+        rvl!!.setOnRefreshListener(1, object : RefreshableViewList.RefreshCallBack {
+            override fun onRefresh() {
+                Thread(Runnable {
+                    Thread.sleep(1000)
+                    rvl!!.finishRefresh()
+                }).start()
+            }
+
+            override fun onFinished() {
+            }
+
+        })
         ll_login = activity!!.findViewById(R.id.ll_login)
         ll_all_select = activity!!.findViewById(R.id.ll_all_select)
         tv_all_price = activity!!.findViewById(R.id.tv_all_price)
@@ -86,15 +132,15 @@ class ShopCarFragment : BaseFragment(){
         im_all_select = activity!!.findViewById(R.id.im_all_select)
         tv_msg = activity!!.findViewById(R.id.tv_msg)
 
-        if (SharedPreferencesUtils.getInstance().getData("loginStatus",false) as Boolean){
-            ll_login!!.visibility=View.GONE
-        }else{
-            ll_login!!.visibility=View.VISIBLE
+        if (SharedPreferencesUtils.getInstance().getData("loginStatus", false) as Boolean) {
+            ll_login!!.visibility = View.GONE
+        } else {
+            ll_login!!.visibility = View.VISIBLE
         }
 
         ll_login!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                startActivity(Intent(activity!!,LoginActivity::class.java))
+                startActivity(Intent(activity!!, LoginActivity::class.java))
             }
         })
         ll_all_select!!.setOnClickListener(object : View.OnClickListener {
@@ -273,6 +319,5 @@ class ShopCarFragment : BaseFragment(){
         mRV!!.setAdapter(mAdapt)
         mRV!!.setItemAnimator(DefaultItemAnimator())
     }
-
 
 }

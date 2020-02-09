@@ -17,10 +17,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by GIOPPL on 2017/4/30.
- */
-
 public class UploadFruitMassageCould {
     private NetData mCircleData;
     private Context mContext;

@@ -15,11 +15,6 @@ import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.SearchFruitSortCould
 import com.gioppl.fruitmanor.view.adapt.ClassifyAdapt
 import java.util.*
-
-
-/**
- * Created by GIOPPL on 2017/10/8.
- */
 class ClassifyFragment : BaseFragment() {
     private val mList = ArrayList<ClassifyAdapt.ClassifyButtonInfo>();
     private var rv: RecyclerView? = null;

@@ -49,6 +49,7 @@
             android:gravity="center"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_money"
                 android:textSize="15sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
             android:layout_height="match_parent"
             android:background="#aaaaaa"/>
         <LinearLayout
+            android:id="@+id/ll_coupon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

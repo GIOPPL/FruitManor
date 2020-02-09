@@ -1,7 +1,9 @@
 package com.gioppl.fruitmanor.view.activity
 
 import android.os.Bundle
+import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.gioppl.fruitmanor.R
@@ -12,11 +14,16 @@ import com.gioppl.fruitmanor.view.fragment.ClassifyFragment
 import com.gioppl.fruitmanor.view.fragment.HomeFragment
 import com.gioppl.fruitmanor.view.fragment.MyFragment
 import com.gioppl.fruitmanor.view.fragment.ShopCarFragment
+import com.gioppl.fruitmanor.view.view.RedPointView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseActivity() {
     var vp: BanSlidingViewPager? = null
     var mRadioGroup: RadioGroup? = null
     var mPagerList = ArrayList<Fragment>()
+    var redPointView:RedPointView?=null
+
 
     override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify?, statusCode: Int, msg: Any?) {
 
@@ -50,6 +57,39 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+
+
+
+    }
+    @Subscribe
+    fun onMessageEvent(msg: MessageEvent){
+        redPointView!!.redPointParams(msg.num)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this)
+    }
+
+
+    //如果在onCreate中运行则获取到的值为0，因为控件没有初始化好
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        val rbtn_shoppingCart=findViewById<RadioButton>(R.id.rbtn_main_three)
+        val shoppingCartWidth=rbtn_shoppingCart.width
+        val shoppingCartHeight=rbtn_shoppingCart.height
+        val rbtn_location = IntArray(2)
+        rbtn_shoppingCart.getLocationInWindow(rbtn_location)
+        redPointView=RedPointView(this,rbtn_location,shoppingCartWidth,shoppingCartHeight)
+        val rl_home=findViewById<RelativeLayout>(R.id.rl_home)
+        rl_home.addView(redPointView)
     }
     private fun initPager() {
         mPagerList.add(HomeFragment())
@@ -63,7 +103,7 @@ class MainActivity : BaseActivity() {
         vp!!.adapter = pagerAdapt
     }
 
-//    public interface BroadCastCallback{
-//        fun onChangeListener(broadCastClassify: BroadCastClassify, statusCode: Int, msg: Any?)
-//    }
+
+    //EventBus分发消息的类
+    class MessageEvent(val num:Int)
 }

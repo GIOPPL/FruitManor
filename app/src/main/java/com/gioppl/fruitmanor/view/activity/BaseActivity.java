@@ -27,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MainBroa
     private MainBroadcastReceiver mainBroadcastReceiver;
     private IntentFilter filter;
     private CocoDialog cocoDialog;
+    private static final boolean isDebug = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MainBroa
     }
 
     @Override
-    public void onChangeListener(MainBroadcastReceiver.BroadCastClassify broadCastClassify, int statusCode,Object msg) {
+    public void onChangeListener(MainBroadcastReceiver.BroadCastClassify broadCastClassify, int statusCode, Object msg) {
         if (broadCastClassify == MainBroadcastReceiver.BroadCastClassify.NET_WORK) {
             if (statusCode == NetUtil.NETWORK_NONE) {
                 cocoDialog.setMessage("没有网络连接..")
@@ -77,34 +78,56 @@ public abstract class BaseActivity extends AppCompatActivity implements MainBroa
                 cocoDialog.dismiss();
             }
         }
-        receiveBroadCast(broadCastClassify, statusCode,msg);
+        receiveBroadCast(broadCastClassify, statusCode, msg);
 
     }
 
-    abstract void receiveBroadCast(MainBroadcastReceiver.BroadCastClassify broadCastClassify, int statusCode,Object msg);
+    abstract void receiveBroadCast(MainBroadcastReceiver.BroadCastClassify broadCastClassify, int statusCode, Object msg);
 
 
     public static void Strawberry(Object object, String tag, String massage) {//草莓🍓
-        Log.i(object.getClass().getName() + "- -" + tag, massage);
+        if (!isDebug) {
+            Log.i(object.getClass().getName() + "- -" + tag, massage);
+        }
     }
 
     public static void Strawberry(Object object, String massage) {//草莓🍓
-        Log.i(object.getClass().getName(), massage);
+        if (!isDebug) {
+            Log.i(object.getClass().getName(), massage);
+        }
     }
 
     public void strawberry(Object object, String tag, String massage) {
-        Log.i(object.getClass().getName() + "- -" + tag, massage);
+        if (!isDebug) {
+            Log.i(object.getClass().getName() + "- -" + tag, massage);
+        }
     }
 
     public void strawberry(Object object, String massage) {
-        Log.i(object.getClass().getName(), massage);
+        if (!isDebug) {
+            Log.i(object.getClass().getName(), massage);
+        }
+    }
+    public void pineApple(Object object, String massage) {//菠萝🍍
+        if (!isDebug) {
+            Log.e(object.getClass().getName(), massage);
+        }
+    }
+    public static void PineApple(Object object, String massage) {//菠萝🍍
+        if (!isDebug) {
+            Log.e(object.getClass().getName(), massage);
+        }
     }
 
     public static void Mango(Context context, String mag) {
-        Toast.makeText(context, mag, Toast.LENGTH_SHORT).show();
+        if (!isDebug) {
+            Toast.makeText(context, mag, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public static void mango(Context context, String mag) {
-        Toast.makeText(context, mag, Toast.LENGTH_SHORT).show();
+    public void mango(Context context, String mag) {
+        if (!isDebug) {
+            Toast.makeText(context, mag, Toast.LENGTH_SHORT).show();
+        }
     }
 }

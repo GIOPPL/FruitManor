@@ -1,6 +1,7 @@
 package com.gioppl.fruitmanor.view.adapt
 
 import android.content.Context
+import android.graphics.Point
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,8 @@ import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 
 
-class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, private var context: Context):RecyclerView.Adapter<ClassifyDescriptionAdapt.MyFruitViewHolder>(){
+class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, private var context: Context,private var classifyClickCallBack: ClassifyClickCallBack)
+    :RecyclerView.Adapter<ClassifyDescriptionAdapt.MyFruitViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.classify_description_rv_item,parent,false))
 
@@ -23,10 +25,16 @@ class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, priv
         holder.tv_title!!.text=mList!![position].title
         holder.tv_subtitle!!.text=mList!![position].subtitle
         holder.tv_price!!.text="￥${mList!![position].price}"
-
-
         val uri = Uri.parse(mList!![position].imageUrl)
         holder.sim_cherry!!.setImageURI(uri)
+        holder.im_add!!.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                val location1 = IntArray(2)
+                holder.sim_cherry!!.getLocationInWindow(location1)
+                classifyClickCallBack.addToShopCar(holder.sim_cherry!!,Point(location1[0],location1[1]),position)
+            }
+        })
+
     }
 
     class MyFruitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -47,5 +55,10 @@ class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, priv
     public fun refreshData(mList:ArrayList<HomeFruitBean>){
         this.mList!!.clear();
         this.mList!!.addAll(mList);
+    }
+
+    public interface ClassifyClickCallBack{
+        fun addToShopCar(imageView: ImageView, point: Point, position: Int)
+        fun lookDescription(position:Int)
     }
 }

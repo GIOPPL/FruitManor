@@ -18,7 +18,7 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
     :RecyclerView.Adapter<HomeFruitAdapt.MyFruitViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.home_friut_rv_item,parent,false))
+            = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.item_home_friut_rv,parent,false))
 
     override fun getItemCount()=if (mList==null) 0 else mList!!.size
 
@@ -36,9 +36,8 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
         holder.im_add!!.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
                 val location1 = IntArray(2)
-                holder.im_add!!.getLocationInWindow(location1)
-
-                homeClickCallBack.addToShopCar(holder.im_add!!,Point(location1[0],location1[1]),position)
+                holder.sim_cherry!!.getLocationInWindow(location1)
+                homeClickCallBack.addToShopCar(holder.sim_cherry!!,Point(location1[0],location1[1]),position)
             }
         })
     }

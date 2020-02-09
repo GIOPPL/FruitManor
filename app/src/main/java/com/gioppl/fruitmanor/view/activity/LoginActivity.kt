@@ -14,6 +14,7 @@ import com.avos.avoscloud.LogInCallback
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver.BROADCAST_ACTION_LOGIN_STATUS
+import com.gioppl.fruitmanor.tool.LoginStatusChangedTools
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 
 
@@ -29,7 +30,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login)
+        setContentView(R.layout.activity_login)
         initView()
         initData()
         ll_home=findViewById(R.id.ll_home)
@@ -41,6 +42,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initData() {
+
 
     }
 
@@ -63,13 +65,14 @@ class LoginActivity : BaseActivity() {
                     SharedPreferencesUtils.getInstance().saveData("objectId",user.objectId)
                     SharedPreferencesUtils.getInstance().saveData("phoneNumber",user.username)
                     SharedPreferencesUtils.getInstance().saveData("loginStatus",true)
+                    SharedPreferencesUtils.getInstance().saveData("money",user.get("money")as Int)
+
+                    LoginStatusChangedTools(this@LoginActivity)
                     finish()
                     val intent=Intent();
                     intent.action= BROADCAST_ACTION_LOGIN_STATUS
                     intent.putExtra("LOGIN_STATUS",true)
                     sendBroadcast(intent);
-
-
                 }else{
                     strawberry(this,"登陆失败:${e.code}- -${e.message}")
                     mango(this@LoginActivity,"登陆失败:${e.code}- -${e.message}")

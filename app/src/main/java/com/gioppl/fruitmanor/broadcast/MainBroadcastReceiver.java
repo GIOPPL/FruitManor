@@ -14,7 +14,7 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
     public static final String BROADCAST_ACTION_NET_STATUS = "android.net.conn.CONNECTIVITY_CHANGE";
 
     public static final int STATUS_CODE_0X00=0x00;
-    public static final int STATUS_CODE_0X01=0x01;
+    public static final int STATUS_CODE_0X01=0x01;//已经登陆
     public BroadCastClassify broadCastClassify=BroadCastClassify.NET_WORK;
 
     public enum BroadCastClassify{
