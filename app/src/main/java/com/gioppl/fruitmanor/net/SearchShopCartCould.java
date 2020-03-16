@@ -27,9 +27,12 @@ public class SearchShopCartCould {
     private Context mContext;
     private ArrayList<ShopCartVagueBean> beanList;
     private MyDbHelper mDbHelper;
-    public SearchShopCartCould(Context mContext){
+    private SQLiteDatabase db;
+    private ShopCartInfoBack shopCartInfoBack;
+    public SearchShopCartCould(Context mContext,ShopCartInfoBack shopCartInfoBack){
         this.mContext=mContext;
         mDbHelper= MyApplication.getInstance().getDbHelper();
+        this.shopCartInfoBack=shopCartInfoBack;
         getVagueDate();
     }
 
@@ -42,13 +45,17 @@ public class SearchShopCartCould {
             public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                 if (e!=null){
                     Log.i("Error","获取购物车基本信息失败："+e.getMessage()+"--"+e.getCode());
+                    shopCartInfoBack.status(false);
                 }else {
                     Log.i("Success"+this.getClass().getName(),"获取购物车基本信息成功");
                     String s=avCloudQueryResult.getResults().toString();
                     beanList=formatVagueNetDataBean(s);
+                    clearDb(db);
                     for (ShopCartVagueBean bean:beanList){
                         getDescriptionDate(bean.getServerData().getFruit_id());
                     }
+                    shopCartInfoBack.status(true);
+
                 }
             }
         });
@@ -72,7 +79,7 @@ public class SearchShopCartCould {
     }
     private void saveToDb(NetFruitBean bean){
         NetFruitBean.ServerDataBean data=bean.getServerData();
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         ContentValues values = new ContentValues();
         values.put(Table.ShopCartTable.GOODS_ID,bean.getObjectId());
@@ -83,14 +90,15 @@ public class SearchShopCartCould {
         values.put(Table.ShopCartTable.DISCOUNT,data.getDiscount());
         values.put(Table.ShopCartTable.TITLE,data.getTitle());
         values.put(Table.ShopCartTable.TOTAL_SALE,data.getTotalSale());
-
         db.replace(Table.ShopCartTable.TABLE_NAME, null, values);
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
-
-
-
+    }
+    private void clearDb(SQLiteDatabase db){
+        db = mDbHelper.getWritableDatabase();
+        String sql="delete from "+Table.ShopCartTable.TABLE_NAME;
+        db.execSQL(sql);
     }
 
     private ArrayList<ShopCartVagueBean> formatVagueNetDataBean(String s) {
@@ -103,5 +111,8 @@ public class SearchShopCartCould {
         Gson gs = new Gson();
         NetFruitBean bean = gs.fromJson(s, NetFruitBean.class);
         return bean;
+    }
+    public interface ShopCartInfoBack{
+        void status(boolean isDownLoad);
     }
 }

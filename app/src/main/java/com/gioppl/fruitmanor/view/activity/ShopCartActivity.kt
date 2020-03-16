@@ -1,11 +1,9 @@
-package com.gioppl.fruitmanor.view.fragment
+package com.gioppl.fruitmanor.view.activity
 
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,27 +11,21 @@ import com.gioppl.fruitmanor.MyApplication
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
-import com.gioppl.fruitmanor.databinding.FragmentShopCarBinding
+import com.gioppl.fruitmanor.databinding.ActivityShopCartBinding
 import com.gioppl.fruitmanor.sql.MyDbHelper
 import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.CocoDialog
 import com.gioppl.fruitmanor.tool.RefreshableViewList
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
-import com.gioppl.fruitmanor.view.activity.LoginActivity
-import com.gioppl.fruitmanor.view.activity.PaymentActivity
 import com.gioppl.fruitmanor.view.adapt.ShopCarAdapt
 import kotlinx.android.synthetic.main.activity_shop_cart.view.*
-import kotlinx.android.synthetic.main.fragment_shop_car.view.im_all_select
-import kotlinx.android.synthetic.main.fragment_shop_car.view.ll_all_select
 import kotlinx.android.synthetic.main.fragment_shop_car.view.ll_login
 import kotlinx.android.synthetic.main.fragment_shop_car.view.rv_shop_car
 import kotlinx.android.synthetic.main.fragment_shop_car.view.rvl_shop
-import kotlinx.android.synthetic.main.fragment_shop_car.view.tv_all_price
-import kotlinx.android.synthetic.main.fragment_shop_car.view.tv_pay
 import java.text.DecimalFormat
 
 
-class ShopCarFragment : BaseFragment() {
+class ShopCartActivity : BaseActivity() {
     private var totalPrice=0.0f;
     private var root: View?=null
     private var mList = ArrayList<HomeFruitBean>()
@@ -50,19 +42,17 @@ class ShopCarFragment : BaseFragment() {
             }
         }
     }
-    override fun onCreateView(inflater: LayoutInflater,  container: ViewGroup?,  savedInstanceState: Bundle?): View? {
-        val mBinding = FragmentShopCarBinding.inflate(inflater)
-        root=mBinding.root
-        return root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val mBinding= ActivityShopCartBinding.inflate(layoutInflater)
+        setContentView(mBinding!!.root)
         mDbHelper= MyApplication.getInstance().dbHelper
+        root=mBinding.root
         setAdaptManager()
         initView()
         initData()
     }
+
     //更新总价格文本，add为加多少钱，如果是减则为负数,如果总价格大于0 支付按钮的颜色就会变蓝色
     private fun updateTotalPrice(add:Float,onlyUpdate:Boolean=false){
         if(!onlyUpdate){
@@ -80,19 +70,19 @@ class ShopCarFragment : BaseFragment() {
             root!!.tv_all_price.text = s
         }
         if (totalPrice>0){
-            root!!.tv_pay.background=activity!!.getDrawable(R.drawable.rect_second_color_10dp)
-            root!!.tv_pay.setTextColor(ContextCompat.getColor(activity!!, R.color.white))
+            root!!.tv_pay.background=getDrawable(R.drawable.rect_second_color_10dp)
+            root!!.tv_pay.setTextColor(ContextCompat.getColor(this@ShopCartActivity, R.color.white))
         }else{
-            root!!.tv_pay.background=activity!!.getDrawable(R.drawable.rect_grey_10dp)
-            root!!.tv_pay.setTextColor(ContextCompat.getColor(activity!!, R.color.noFocusColor))
+            root!!.tv_pay.background=getDrawable(R.drawable.rect_grey_10dp)
+            root!!.tv_pay.setTextColor(ContextCompat.getColor(this@ShopCartActivity, R.color.noFocusColor))
         }
     }
     private fun updateOtherButton(){
         if (mSelectList.size==mList.size){
-            root!!.im_all_select.setImageDrawable(activity!!.getDrawable(R.mipmap.select_pressed))
+            root!!.im_all_select.setImageDrawable(getDrawable(R.mipmap.select_pressed))
             root!!.im_all_select.tag="select"
         }else{
-            root!!.im_all_select.setImageDrawable(activity!!.getDrawable(R.mipmap.select_normal))
+            root!!.im_all_select.setImageDrawable(getDrawable(R.mipmap.select_normal))
             root!!.im_all_select.tag="noSelect"
         }
     }
@@ -101,7 +91,7 @@ class ShopCarFragment : BaseFragment() {
         updateTotalPrice(0.0f)
         root!!.tv_pay.setOnClickListener{
             if (totalPrice>0)
-                startActivity(Intent(activity!!, PaymentActivity::class.java))
+                startActivity(Intent(this,PaymentActivity::class.java))
         }
         root!!.rvl_shop.setOnRefreshListener(1, object : RefreshableViewList.RefreshCallBack {
             override fun onRefresh() {
@@ -115,11 +105,11 @@ class ShopCarFragment : BaseFragment() {
 
         })
         root!!.ll_login.setOnClickListener {
-            startActivity(Intent(activity!!, LoginActivity::class.java))
+            startActivity(Intent(this@ShopCartActivity, LoginActivity::class.java))
         }
         root!!.tv_delete.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
-                val dialog = CocoDialog(activity!!)
+                val dialog = CocoDialog(this@ShopCartActivity)
                 dialog.setMessage("一定要删除嘛？")
                         .setImageResId(R.mipmap.ic_kiwi)
                         .setTitle("果果提示")
@@ -195,10 +185,10 @@ class ShopCarFragment : BaseFragment() {
     }
 
     private fun setAdaptManager() {
-        val layoutManager = LinearLayoutManager(activity!!)
+        val layoutManager = LinearLayoutManager(this)
         root!!.rv_shop_car!!.layoutManager = layoutManager
         root!!.rv_shop_car!!.setHasFixedSize(true)
-        mAdapt = ShopCarAdapt(mList, activity!!, object : ShopCarAdapt.SelectCallBack {
+        mAdapt = ShopCarAdapt(mList, this, object : ShopCarAdapt.SelectCallBack {
             override fun back(position: Int, price: Float, isAdd: Boolean) {
                 if (isAdd){//添加
                     mSelectList.add(mList[position])
@@ -221,5 +211,8 @@ class ShopCarFragment : BaseFragment() {
         } else {
             root!!.ll_login.visibility = View.VISIBLE
         }
+    }
+    fun back(view: View) {
+        finish()
     }
 }

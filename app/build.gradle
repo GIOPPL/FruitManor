@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
+    viewBinding.enabled = true
     defaultConfig {
         applicationId "com.gioppl.fruitmanor"
         minSdkVersion 26
@@ -17,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
@@ -36,6 +41,7 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.57'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'cn.leancloud.android:avoscloud-sdk:4.7.10'
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 }
 repositories {
     mavenCentral()

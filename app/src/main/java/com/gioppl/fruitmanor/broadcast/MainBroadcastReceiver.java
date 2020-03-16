@@ -30,7 +30,6 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // 如果相等的话就说明网络状态发生了变化
-
         String action=intent.getAction();
         switch (action){
             case ConnectivityManager.CONNECTIVITY_ACTION:

@@ -9,7 +9,9 @@
     android:orientation="horizontal">
     <ImageView
         android:id="@+id/im_select"
-        android:layout_width="20dp"
+        android:layout_width="40dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_height="match_parent"
         android:src="@mipmap/select_normal"
         android:layout_margin="10dp"/>

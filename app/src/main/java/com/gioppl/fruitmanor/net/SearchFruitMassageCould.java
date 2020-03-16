@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
@@ -12,14 +11,9 @@ import com.avos.avoscloud.CloudQueryCallback;
 import com.gioppl.fruitmanor.bean.NetFruitBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by GIOPPL on 2017/4/30.
- */
 
 public class SearchFruitMassageCould {
     private NetData mCircleData;
@@ -40,8 +34,8 @@ public class SearchFruitMassageCould {
                     Log.i("Error",e.getMessage()+"--"+e.getCode());
                 }else {
                     Log.i("Success"+this.getClass().getName(),"获取首页特价商品成功");
-                    String s1=avCloudQueryResult.getResults().toString();
-                    beanList=FormatNetDataBean(s1);
+                    String s=avCloudQueryResult.getResults().toString();
+                    beanList=FormatNetDataBean(s);
                     Message msg=new Message();
                     msg.arg1=0x9;
                     msg.obj=beanList;

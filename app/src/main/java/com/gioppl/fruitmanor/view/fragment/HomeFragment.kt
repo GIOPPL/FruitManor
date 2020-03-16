@@ -1,5 +1,6 @@
 package com.gioppl.fruitmanor.view.fragment
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.AddGoodsToShopCartCloud
 import com.gioppl.fruitmanor.net.SearchFruitMassageCould
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
+import com.gioppl.fruitmanor.view.activity.GoodsLookActivity
 import com.gioppl.fruitmanor.view.activity.MainActivity
 import com.gioppl.fruitmanor.view.adapt.HomeFruitAdapt
 import org.greenrobot.eventbus.EventBus
@@ -96,7 +98,6 @@ class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
         val userPhone = SharedPreferencesUtils.getInstance().getData("phoneNumber", "") as String
         val fruitId = mList[position].objectId
         AddGoodsToShopCartCloud(activity!!, userPhone, fruitId)
-
         val shoppingCart = activity!!.findViewById(R.id.rbtn_main_three) as RadioButton
         val shoppingCartAnimation = ShoppingCartAnimation(activity)
         val cartIcon = ImageView(activity)
@@ -104,12 +105,10 @@ class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
         cartIcon.setImageDrawable(imageView.drawable)
         shoppingCartAnimation.addGoodsToCart(cartIcon, imageView, shoppingCart)
         EventBus.getDefault().post(MainActivity.MessageEvent(1))
-
-
     }
 
     override fun lookDescription(position: Int) {
-
+        startActivity(Intent(activity!!,GoodsLookActivity::class.java))
     }
 
     @Subscribe

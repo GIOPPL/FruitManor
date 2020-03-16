@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
@@ -40,6 +41,11 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
                 homeClickCallBack.addToShopCar(holder.sim_cherry!!,Point(location1[0],location1[1]),position)
             }
         })
+        holder.ll_all!!.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                homeClickCallBack.lookDescription(position)
+            }
+        })
     }
 
     class MyFruitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -50,7 +56,9 @@ class HomeFruitAdapt(private var mList:ArrayList<HomeFruitBean>?,private var con
         var sim_cherry: SimpleDraweeView? = null
         var tv_price: TextView? = null
         var im_add:ImageView? = null
+        var ll_all:LinearLayout?=null
         init {
+            ll_all = itemView.findViewById(R.id.ll_all);
             tv_title = itemView.findViewById(R.id.tv_title);
             tv_subtitle = itemView.findViewById(R.id.tv_subtitle)
             tv_discount = itemView.findViewById(R.id.tv_tag_discount)

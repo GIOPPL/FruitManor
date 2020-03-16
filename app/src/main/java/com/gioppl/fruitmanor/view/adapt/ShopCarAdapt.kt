@@ -21,7 +21,8 @@ class ShopCarAdapt(private var mList: ArrayList<HomeFruitBean>?, private var con
 
     override fun onBindViewHolder(holder: MyFruitViewHolder, position: Int) {
         val bean =mList!![position]
-        holder.tv_title!!.text = bean.title
+        if (bean.title!="")
+            holder.tv_title!!.text = bean.title
         holder.tv_price!!.text = "￥${bean.price}"
         val uri = Uri.parse(bean.imageUrl)
         holder.sim_cherry!!.setImageURI(uri)

@@ -1,7 +1,6 @@
 package com.gioppl.fruitmanor.view.activity
 
 import android.app.ActionBar
-import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
@@ -13,7 +12,6 @@ import com.avos.avoscloud.AVUser
 import com.avos.avoscloud.LogInCallback
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
-import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver.BROADCAST_ACTION_LOGIN_STATUS
 import com.gioppl.fruitmanor.tool.LoginStatusChangedTools
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 
@@ -69,10 +67,10 @@ class LoginActivity : BaseActivity() {
 
                     LoginStatusChangedTools(this@LoginActivity)
                     finish()
-                    val intent=Intent();
-                    intent.action= BROADCAST_ACTION_LOGIN_STATUS
-                    intent.putExtra("LOGIN_STATUS",true)
-                    sendBroadcast(intent);
+//                    val intent=Intent();
+//                    intent.action= BROADCAST_ACTION_LOGIN_STATUS
+//                    intent.putExtra("LOGIN_STATUS",true)
+//                    sendBroadcast(intent);
                 }else{
                     strawberry(this,"登陆失败:${e.code}- -${e.message}")
                     mango(this@LoginActivity,"登陆失败:${e.code}- -${e.message}")

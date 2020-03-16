@@ -1,26 +1,26 @@
 package com.gioppl.fruitmanor.test;
 
-import android.util.Log;
-
-import com.avos.avoscloud.AVCloudQueryResult;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.CloudQueryCallback;
+import android.graphics.Point;
 
 public class Test {
     @org.junit.Test
-    void update() {
-        String cql="select * from ShopCart when id =";
-        AVQuery.doCloudQueryInBackground(cql, new CloudQueryCallback<AVCloudQueryResult>() {
-            @Override
-            public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
-                if (e!=null){
-                    Log.i("Error","获取购物车失败："+e.getMessage()+"--"+e.getCode());
-                }else {
-                    Log.i("Success"+this.getClass().getName(),"获取购物车成功");
-                    String s=avCloudQueryResult.getResults().toString();
-                }
-            }
-        });
+    public void update() {
+        String a[]=new String[10];
+        try {
+            Point point=new Point();
+            String path=point.getClass().getName();
+            Class<?> classClass= Class.forName("com.gioppl.fruitmanor.test.MyClass");
+            MyClass myClass= (MyClass) classClass.newInstance();
+//            myClass.aaa(1);
+//            myClass.x=100;
+//            System.out.println("hello,"+myClass.x);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.PaymentActivity"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="70dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:onClick="back"
+            android:src="@mipmap/arraw_left_first_color" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/black"
+            android:layout_centerHorizontal="true"
+            android:text="祖安支付"/>
+
+    </RelativeLayout>
+    <TextView
+        android:background="@color/black"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="没钱买nm呢，滚！！！"
+        />
+</LinearLayout>

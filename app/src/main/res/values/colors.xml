@@ -8,6 +8,8 @@
     <color name="appMainColor">#FFC107</color>
     <color name="firstColor">#FFC107</color>
     <color name="secondColor">#03A9F4</color>
+    <color name="thirdColor">#FB3379</color>
+    <color name="thirdColorDown">#FAD7E3</color>
     <color name="noFocusColor">#aaaaaa</color>
     <color name="unfocusColorSecond">#eeeeee</color>
     <color name="white">#ffffff</color>

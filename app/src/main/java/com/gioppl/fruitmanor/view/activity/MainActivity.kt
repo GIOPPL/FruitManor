@@ -24,7 +24,6 @@ class MainActivity : BaseActivity() {
     var mPagerList = ArrayList<Fragment>()
     var redPointView:RedPointView?=null
 
-
     override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify?, statusCode: Int, msg: Any?) {
 
     }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.GoodsLookActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/sv_goods"
+            layout="@layout/include_goods_scroll"/>
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:onClick="back"
+                android:src="@mipmap/arraw_left_first_color" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_top_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="商品"
+                    android:textColor="@color/thirdColor"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_top_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="详情"
+                    android:textColor="@color/noFocusColor"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:onClick="openSHopCart"
+                android:padding="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/shop_cart_high"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:onClick="addToShopCart"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/rect_third_down_color_10dp"
+                android:textColor="@color/thirdColor"
+                android:text="加入购物车"/>
+            <TextView
+                android:onClick="buyNow"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/rect_third_color_10dp"
+                android:textColor="@color/white"
+                android:text="  立即购买  "/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
