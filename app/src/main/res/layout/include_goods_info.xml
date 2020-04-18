@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_marginTop="10dp"
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:context=".view.activity.GoodsLookActivity"
     android:orientation="vertical">
     <TextView
         android:textSize="15sp"
@@ -30,6 +32,7 @@
             android:textColor="@color/noFocusColor"
             android:text="产地" />
         <TextView
+            android:id="@+id/tv_producingArea"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,6 +53,7 @@
             android:textColor="@color/noFocusColor"
             android:text="规格" />
         <TextView
+            android:id="@+id/tv_scalage"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +74,7 @@
             android:textColor="@color/noFocusColor"
             android:text="重量" />
         <TextView
+            android:id="@+id/tv_goodsWeight"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +95,7 @@
             android:textColor="@color/noFocusColor"
             android:text="生产日期" />
         <TextView
+            android:id="@+id/tv_goodsProducingDate"
             android:layout_marginLeft="23dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,6 +116,7 @@
             android:textColor="@color/noFocusColor"
             android:text="保质期" />
         <TextView
+            android:id="@+id/tv_goodsFreshDate"
             android:layout_marginLeft="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

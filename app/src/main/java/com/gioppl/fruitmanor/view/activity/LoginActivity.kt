@@ -1,6 +1,7 @@
 package com.gioppl.fruitmanor.view.activity
 
 import android.app.ActionBar
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
@@ -79,7 +80,7 @@ class LoginActivity : BaseActivity() {
         })
     }
     public fun register(view: View) {
-
+        startActivity(Intent(this@LoginActivity,RegisterActivity::class.java))
     }
 
     public fun back(view: View) {

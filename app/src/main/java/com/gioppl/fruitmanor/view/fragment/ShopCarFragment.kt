@@ -14,6 +14,7 @@ import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.databinding.FragmentShopCarBinding
+import com.gioppl.fruitmanor.net.DeleteGoodsFromShopCartCloud
 import com.gioppl.fruitmanor.sql.MyDbHelper
 import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.CocoDialog
@@ -125,11 +126,14 @@ class ShopCarFragment : BaseFragment() {
                         .setTitle("果果提示")
                         .setSingle(false)
                         .setOnClickBottomListener(object : CocoDialog.OnClickBottomListener {
-                            override fun onPositiveClick() {
+                            override fun onPositiveClick() {//删除
+                                val deleteList=ArrayList<String>()
                                 if (mSelectList.size!=0){
                                     for (i in 0 until mSelectList.size){
                                         mList.remove(mSelectList[i])
+                                        deleteList.add(mSelectList[i].shopId)
                                     }
+                                    DeleteGoodsFromShopCartCloud(activity!!,deleteList)
                                 }
                                 mSelectList.clear()
                                 mAdapt!!.notifyDataSetChanged()
@@ -138,7 +142,7 @@ class ShopCarFragment : BaseFragment() {
                                 dialog.dismiss()
                             }
 
-                            override fun onNegtiveClick() {
+                            override fun onNegtiveClick() {//没有删除
                                 dialog.dismiss()
                             }
                         }).show()
@@ -181,6 +185,7 @@ class ShopCarFragment : BaseFragment() {
         val mCursor: Cursor = mDbHelper!!.exeSql(sql)
         while (mCursor.moveToNext()) {
             val bean=HomeFruitBean()
+            bean.shopId=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.SHOP_ID))
             bean.objectId=mCursor.getString(mCursor.getColumnIndex(Table.ShopCartTable.GOODS_ID))
             bean.classify=mCursor.getInt(mCursor.getColumnIndex(Table.ShopCartTable.CLASSIFY))
             bean.price=mCursor.getFloat(mCursor.getColumnIndex(Table.ShopCartTable.PRICE))

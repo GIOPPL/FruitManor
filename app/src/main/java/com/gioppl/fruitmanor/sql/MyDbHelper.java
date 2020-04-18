@@ -66,6 +66,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
                 Table.ShopCartTable.TABLE_NAME +
                 " (" +
                 Table.ShopCartTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Table.ShopCartTable.SHOP_ID + " VARCHAR(20), " +
                 Table.ShopCartTable.GOODS_ID + " VARCHAR(20), " +
                 Table.ShopCartTable.CLASSIFY + " INTEGER, " +
                 Table.ShopCartTable.PRICE + " FLOAT, " +

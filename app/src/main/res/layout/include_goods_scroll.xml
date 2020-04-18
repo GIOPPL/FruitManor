@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,12 +14,14 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white">
 
-
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sim_mainImage"
+                android:scaleType="fitXY"
+                fresco:fadeDuration="400"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
+                fresco:placeholderImage="@mipmap/hanbao"/>
 
-                android:src="@mipmap/hanbao" />
         </RelativeLayout>
 
         <LinearLayout
@@ -89,6 +92,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_goodsSendPattern"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -99,6 +103,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_coupon_get"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -145,17 +150,22 @@
         </LinearLayout>
 
         <include layout="@layout/include_goods_info"/>
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sim_goodsImage1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_kiwi"/>
-        <ImageView
+            android:layout_height="400dp"
+            fresco:placeholderImage="@mipmap/ic_kiwi"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sim_goodsImage2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_kiwi"/>
-        <ImageView
+            android:layout_height="400dp"
+            android:scaleType="fitXY"
+            fresco:fadeDuration="400"
+            fresco:placeholderImage="@mipmap/ic_kiwi"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sim_goodsImage3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_kiwi"/>
+            android:layout_height="400dp"
+            fresco:placeholderImage="@mipmap/ic_kiwi"/>
     </LinearLayout>
 </ScrollView>

@@ -52,7 +52,7 @@ public class SearchShopCartCould {
                     beanList=formatVagueNetDataBean(s);
                     clearDb(db);
                     for (ShopCartVagueBean bean:beanList){
-                        getDescriptionDate(bean.getServerData().getFruit_id());
+                        getDescriptionDate(bean.getServerData().getFruit_id(),bean.getObjectId());
                     }
                     shopCartInfoBack.status(true);
 
@@ -61,7 +61,7 @@ public class SearchShopCartCould {
         });
     }
 
-    public void getDescriptionDate(String id){
+    public void getDescriptionDate(String id, final String shopId){
         String cql="select * from Fruit where objectId ='"+id+"'";
         AVQuery.doCloudQueryInBackground(cql, new CloudQueryCallback<AVCloudQueryResult>() {
             @Override
@@ -72,16 +72,17 @@ public class SearchShopCartCould {
                     BaseActivity.Strawberry(this,"Success:获取购物车细节信息成功");
                     String s=avCloudQueryResult.getResults().toString();
                     NetFruitBean bean=formatDescriptionNetDataBean(s);
-                    saveToDb(bean);
+                    saveToDb(bean,shopId);
                 }
             }
         });
     }
-    private void saveToDb(NetFruitBean bean){
+    private void saveToDb(NetFruitBean bean,String shopId){
         NetFruitBean.ServerDataBean data=bean.getServerData();
         db = mDbHelper.getWritableDatabase();
         db.beginTransaction();
         ContentValues values = new ContentValues();
+        values.put(Table.ShopCartTable.SHOP_ID,shopId);
         values.put(Table.ShopCartTable.GOODS_ID,bean.getObjectId());
         values.put(Table.ShopCartTable.CLASSIFY,data.getClassify());
         values.put(Table.ShopCartTable.PRICE,data.getPrice());

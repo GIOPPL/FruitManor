@@ -14,6 +14,7 @@ public class HomeFruitBean {
     private String objectId;
 
     private boolean isSelect;//是否选中
+    private String shopId;//shop的主键
 
     public HomeFruitBean(String title, String subtitle, float price, String arriveTime, String discount,
                          String imageUrl, int classify, int totalSale,String objectId) {
@@ -31,6 +32,14 @@ public class HomeFruitBean {
 
     public HomeFruitBean() {
 
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
     }
 
     public boolean isSelect() {

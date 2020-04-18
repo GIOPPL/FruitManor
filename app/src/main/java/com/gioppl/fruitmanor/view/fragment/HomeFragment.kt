@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.Subscribe
 
 class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
     var mList = ArrayList<HomeFruitBean>()
+    var moreInfoList= java.util.ArrayList<NetFruitBean>()//包含全部信息的列表
     var mRV: RecyclerView? = null
     var mAdapt: HomeFruitAdapt? = null
     var rl_home: RelativeLayout? = null
@@ -45,31 +46,16 @@ class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         getData()
-
-
-//        NetFileTools.getInstance().upload("background")
-
-
-//        val uploadFruitMassageCould= UploadFruitMassageCould(activity!!,object : UploadFruitMassageCould.NetData{
-//            override fun getData(msg: String?) {
-//
-//            }
-//
-//        });
-//        for (i in 0..20){
-//            val bean=HomeFruitBean("$i","黄金果肉 咬上一口 香甜细糯",29.9f,"次日达","7折","http://lc-d2693j76.cn-n1.lcfile.com/52fb246cdb7d2b90006b/cheer.jpg");
-//            uploadFruitMassageCould.uploadMassage(bean);
-//        }
-
-
         setAdaptManager()
     }
 
     private fun getData() {
         val leanCouldNet = SearchFruitMassageCould(activity!!, object : SearchFruitMassageCould.NetData {
             override fun getData(beanList: java.util.ArrayList<NetFruitBean>?) {
+                moreInfoList.clear()
+                moreInfoList.addAll(beanList!!)
                 mList.clear();
-                for (i in beanList!!) {
+                for (i in beanList) {
                     val bean = HomeFruitBean(i.serverData.title, i.serverData.subtitle, i.serverData.price.toFloat(),
                             i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl,
                             i.serverData.classify, i.serverData.totalSale, i.objectId)
@@ -109,10 +95,14 @@ class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
 
     override fun lookDescription(position: Int) {
         startActivity(Intent(activity!!,GoodsLookActivity::class.java))
+        EventBus.getDefault().postSticky(moreInfoList[position])
     }
 
     @Subscribe
     fun onMessageEvent(msg: MainActivity.MessageEvent) {
+    }
+    @Subscribe(sticky = true)
+    fun onMessageEvent2(fruitBean : NetFruitBean) {
     }
 
     override fun onStop() {

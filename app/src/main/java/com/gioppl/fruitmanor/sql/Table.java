@@ -8,6 +8,7 @@ public class Table {
         public static final String TABLE_NAME="ShopCartTable";
 
         public static final String ID="id";
+        public static final String SHOP_ID="shop_id";
         public static final String GOODS_ID="goods_id";
         public static final String CLASSIFY="classify";
         public static final String PRICE="price";

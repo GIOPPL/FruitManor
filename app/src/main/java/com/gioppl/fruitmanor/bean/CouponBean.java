@@ -8,6 +8,18 @@ public class CouponBean {
     private String imageUrl;
     private String title;
 
+    public CouponBean() {
+    }
+
+    public CouponBean(int reduce_money, String goods_id, String endTime, String user, String imageUrl, String title) {
+        this.reduce_money = reduce_money;
+        this.goods_id = goods_id;
+        this.endTime = endTime;
+        this.user = user;
+        this.imageUrl = imageUrl;
+        this.title = title;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
