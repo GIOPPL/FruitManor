@@ -10,6 +10,7 @@ import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.tool.BanSlidingViewPager
 import com.gioppl.fruitmanor.tool.PermissionUtils
+import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 import com.gioppl.fruitmanor.view.fragment.ClassifyFragment
 import com.gioppl.fruitmanor.view.fragment.HomeFragment
 import com.gioppl.fruitmanor.view.fragment.MyFragment
@@ -57,12 +58,6 @@ class MainActivity : BaseActivity() {
             }
         }
 
-
-
-    }
-    @Subscribe
-    fun onMessageEvent(msg: MessageEvent){
-        redPointView!!.redPointParams(msg.num)
     }
 
     override fun onStop() {
@@ -76,8 +71,6 @@ class MainActivity : BaseActivity() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this)
     }
-
-
     //如果在onCreate中运行则获取到的值为0，因为控件没有初始化好
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -89,6 +82,13 @@ class MainActivity : BaseActivity() {
         redPointView=RedPointView(this,rbtn_location,shoppingCartWidth,shoppingCartHeight)
         val rl_home=findViewById<RelativeLayout>(R.id.rl_home)
         rl_home.addView(redPointView)
+        val isLogin = SharedPreferencesUtils.getInstance().getData("loginStatus", false) as Boolean
+        if (isLogin) {//已经登陆了
+            val shopHaveGoods=SharedPreferencesUtils.getInstance().getData("redPointNum", 0) as Int
+            redPointView!!.redPointParams(shopHaveGoods)
+        }else{
+            redPointView!!.redPointParams(0)
+        }
     }
     private fun initPager() {
         mPagerList.add(HomeFragment())
@@ -103,6 +103,12 @@ class MainActivity : BaseActivity() {
     }
 
 
-    //EventBus分发消息的类
-    class MessageEvent(val num:Int)
+    //EventBus分发消息的类,isAdd总共有两种模式，true是增加模式，false是设置模式,默认为增加模式
+    class MessageEvent(val num:Int,val isAdd:Boolean=true)
+    class RedPointMessageEvent(val isRefresh:Boolean=true)
+    @Subscribe
+    fun onMessageEvent(msg: RedPointMessageEvent){
+        if (msg.isRefresh)
+            redPointView!!.refreshRedPoint()
+    }
 }

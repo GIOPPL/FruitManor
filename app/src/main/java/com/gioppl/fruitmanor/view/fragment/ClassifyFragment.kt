@@ -1,9 +1,13 @@
 package com.gioppl.fruitmanor.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -13,6 +17,7 @@ import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.FruitSortBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.SearchFruitSortCould
+import com.gioppl.fruitmanor.view.activity.SearchGoodsActivity
 import com.gioppl.fruitmanor.view.adapt.ClassifyAdapt
 import java.util.*
 class ClassifyFragment : BaseFragment() {
@@ -28,6 +33,8 @@ class ClassifyFragment : BaseFragment() {
     private var im_sort_price: ImageView?=null
     private var view_select:View?=null
     private var sortDown=false
+
+    var et_search: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -81,6 +88,24 @@ class ClassifyFragment : BaseFragment() {
         tv_total_sale=activity!!.findViewById(R.id.tv_total_sale);
         im_sort_price=activity!!.findViewById(R.id.im_sort_price);
         view_select=activity!!.findViewById(R.id.view_select);
+
+        et_search = activity!!.findViewById(R.id.et_search)
+        et_search!!.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    //处理事件
+                    val s=et_search!!.text.toString()
+                    et_search!!.text.clear()
+                    val intent = Intent(activity!!, SearchGoodsActivity::class.java)
+                    intent.putExtra("searchKey",s)
+                    startActivity(intent)
+                }
+                return false;
+            }
+
+        })
 
         tv_all!!.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {

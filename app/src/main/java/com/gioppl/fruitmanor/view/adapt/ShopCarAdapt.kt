@@ -15,7 +15,7 @@ import com.gioppl.fruitmanor.bean.HomeFruitBean
 
 class ShopCarAdapt(private var mList: ArrayList<HomeFruitBean>?, private var context: Context, var selectCallBack: SelectCallBack) : RecyclerView.Adapter<ShopCarAdapt.MyFruitViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.shop_car_rv_item, parent, false))
+            = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.item_shop_car_rv, parent, false))
 
     override fun getItemCount() = if (mList == null) 0 else mList!!.size
 

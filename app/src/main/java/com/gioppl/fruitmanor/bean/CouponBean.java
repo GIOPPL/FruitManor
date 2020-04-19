@@ -7,6 +7,8 @@ public class CouponBean {
     private String user;
     private String imageUrl;
     private String title;
+    private String objectId;
+
 
     public CouponBean() {
     }
@@ -18,6 +20,24 @@ public class CouponBean {
         this.user = user;
         this.imageUrl = imageUrl;
         this.title = title;
+    }
+
+    public CouponBean(int reduce_money, String goods_id, String endTime, String user, String imageUrl, String title, String objectId) {
+        this.reduce_money = reduce_money;
+        this.goods_id = goods_id;
+        this.endTime = endTime;
+        this.user = user;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.objectId = objectId;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getImageUrl() {

@@ -55,6 +55,7 @@
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <TextView
+                android:visibility="gone"
                 android:layout_marginRight="10dp"
                 android:id="@+id/tv_find_like"
                 android:background="@drawable/rect_first_color"

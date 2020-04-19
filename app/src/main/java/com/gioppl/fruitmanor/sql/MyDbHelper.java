@@ -84,6 +84,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
                 " (" +
                 Table.CouponTable.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Table.CouponTable.GOODS_ID + " VARCHAR(20), " +
+                Table.CouponTable.OBJECT_ID + " VARCHAR(20), " +
                 Table.CouponTable.IMAGE_URL + " VARCHAR(200), " +
                 Table.CouponTable.TITLE + " VARCHAR(100), " +
                 Table.CouponTable.REDUCE_MONEY + " INTEGER, " +

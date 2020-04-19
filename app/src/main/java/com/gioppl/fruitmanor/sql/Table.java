@@ -25,6 +25,7 @@ public class Table {
     public class CouponTable{
         public static final String TABLE_NAME="CouponTable";
 
+        public static final String OBJECT_ID="object_id";
         public static final String ID="id";
         public static final String GOODS_ID="goods_id";
         public static final String REDUCE_MONEY="reduce_money";

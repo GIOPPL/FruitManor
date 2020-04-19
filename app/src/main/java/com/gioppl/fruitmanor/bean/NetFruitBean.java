@@ -82,6 +82,15 @@ public class NetFruitBean {
         private int id;
         private String producingArea;
         private int totalSale;
+        private String shopId;//如果这个类是为了购物车，这个就有意义，这个定义的是ShopCart表中的objectId
+
+        public String getShopId() {
+            return shopId;
+        }
+
+        public void setShopId(String shopId) {
+            this.shopId = shopId;
+        }
 
         public String get_$Type11() {
             return _$Type11;

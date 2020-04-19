@@ -6,7 +6,9 @@ public class Test {
     @org.junit.Test
     public void update() {
         String a[]=new String[10];
+
         try {
+
             Point point=new Point();
             String path=point.getClass().getName();
             Class<?> classClass= Class.forName("com.gioppl.fruitmanor.test.MyClass");

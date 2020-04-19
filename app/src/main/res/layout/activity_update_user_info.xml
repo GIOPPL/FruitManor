@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.UpdateUserInfoActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="back"
+        android:src="@mipmap/arraw_left_first_color"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_margin="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改昵称"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_initialName"
+                android:textSize="15sp"
+                android:textColor="#555555"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原昵称"/>
+
+            <EditText
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/et_alter_initial"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:textColorHint="#aaaaaa"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/noFocusColor"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:textSize="15sp"
+                android:textColor="#555555"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改为"/>
+
+            <EditText
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/et_alter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="请输入昵称"
+                android:textColorHint="#aaaaaa"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <View
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/noFocusColor"/>
+
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_login"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rect_second_color_10dp"
+            android:clickable="true"
+            android:onClick="startAlter"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="确定修改"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

@@ -3,11 +3,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import com.avos.avoscloud.AVException
-import com.avos.avoscloud.AVUser
-import com.avos.avoscloud.SignUpCallback
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
+import com.gioppl.fruitmanor.net.RegisterCould
 
 class RegisterActivity :BaseActivity(){
     var ed_user: EditText? = null
@@ -19,7 +17,7 @@ class RegisterActivity :BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register)
+        setContentView(R.layout.activity_register)
         initView()
     }
 
@@ -35,22 +33,25 @@ class RegisterActivity :BaseActivity(){
             mango(this@RegisterActivity,"用户名或者密码为空")
             return
         }
-        val user = AVUser()// 新建 AVUser 对象实例
-        user.username = userName// 设置用户名
-        user.mobilePhoneNumber=userName
-        user.setPassword(userPassword)// 设置密码
-        user.signUpInBackground(object : SignUpCallback() {
-            override fun done(e: AVException?) {
-                if (e == null) {
-                    // 注册成功
-                    mango(this@RegisterActivity, "注册成功")
-                    finish()
-                } else {
-                    mango(this@RegisterActivity, "注册失败,错误信息：${e.message}")
-                    // 失败的原因可能有多种，常见的是用户名已经存在。
-                }
-            }
-        })
+//        val user = AVUser()// 新建 AVUser 对象实例
+//        user.username = userName// 设置用户名
+//        user.mobilePhoneNumber=userName
+//        user.setPassword(userPassword)// 设置密码
+//        user.signUpInBackground(object : SignUpCallback() {
+//            override fun done(e: AVException?) {
+//                if (e == null) {
+//                    // 注册成功
+//                    mango(this@RegisterActivity, "注册成功")
+//                    finish()
+//                } else {
+//                    mango(this@RegisterActivity, "注册失败,错误信息：${e.message}")
+//                    // 失败的原因可能有多种，常见的是用户名已经存在。
+//                }
+//            }
+//        })
+        RegisterCould(this,userName,userPassword)
+        mango(this@RegisterActivity, "注册成功")
+        finish()
     }
     fun back(view: View) {
         finish()

@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.gioppl.fruitmanor.tool.SharedPreferencesUtils;
+
 import java.nio.file.Path;
 
 import androidx.annotation.Nullable;
@@ -69,7 +71,7 @@ public class RedPointView extends View {
         mTextPaint.setPathEffect(new CornerPathEffect(10f));
     }
 
-    public void redPointParams(int num) {
+    public void redPointParamsAdd(int num) {//每次点击加入购物车的时候会在红点加一个
         fruit=num+fruit;
         if (fruit>=10){
             if (CIRCLE_RADIUS<=25)
@@ -79,6 +81,27 @@ public class RedPointView extends View {
                 CIRCLE_RADIUS+=5.0f;
         }
         invalidate();
+    }
+    public void redPointParams(int num) {//初始化的时候红点中的数字准确值，不是加减
+        fruit=num;
+        if (fruit>=10){
+            if (CIRCLE_RADIUS<=25)
+                CIRCLE_RADIUS+=5.0f;
+        }else if (fruit>=100){
+            if (CIRCLE_RADIUS<=30)
+                CIRCLE_RADIUS+=5.0f;
+        }
+        invalidate();
+    }
+    public void refreshRedPoint(){//刷新红点
+        boolean isLogin = (boolean) SharedPreferencesUtils.getInstance().getData("loginStatus", false);
+        if (isLogin) {//已经登陆了
+            int shopHaveGoods= (int) SharedPreferencesUtils.getInstance().getData("redPointNum", 0);
+            redPointParams(shopHaveGoods);
+        }else{
+            redPointParams(0);
+        }
+
     }
 
     @Override

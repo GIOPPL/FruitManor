@@ -47,7 +47,7 @@
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="后可同步购物车商品"/>
+            android:text="后可领取优惠券"/>
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"

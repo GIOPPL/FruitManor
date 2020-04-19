@@ -11,16 +11,10 @@
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="芜湖"
+        android:text="@string/app_name"
         android:textSize="18dp"
         android:layout_marginBottom="3dp"
-        android:textColor="@android:color/white"/>
-    <ImageView
-        android:layout_marginLeft="3dp"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginBottom="10dp"
-        android:src="@mipmap/orientation_down"/>
+        android:textColor="@color/thirdColor"/>
     <LinearLayout
         android:layout_marginBottom="3dp"
         android:layout_marginRight="20dp"
@@ -37,6 +31,7 @@
             android:layout_marginLeft="5dp"
             android:src="@mipmap/search_grey"/>
         <EditText
+            android:id="@+id/et_search"
             android:layout_marginLeft="10dp"
             android:hint="请输入商品名称"
             android:textSize="15sp"

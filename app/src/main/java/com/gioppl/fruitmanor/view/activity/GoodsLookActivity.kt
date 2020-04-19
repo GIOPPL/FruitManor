@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.gioppl.fruitmanor.bean.NetFruitBean
+import com.gioppl.fruitmanor.bean.OrderFormBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.databinding.ActivityGoodsLookBinding
 import com.gioppl.fruitmanor.net.AddGoodsToShopCartCloud
@@ -16,10 +17,11 @@ import kotlinx.android.synthetic.main.include_goods_scroll.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-
+//商品的详细界面
 class GoodsLookActivity : BaseActivity() {
     private var root: View? = null
     private var objectId = ""
+    private var fruitBean: NetFruitBean?=null
     override fun receiveBroadCast(broadCastClassify: MainBroadcastReceiver.BroadCastClassify?, statusCode: Int, msg: Any?) {
 
     }
@@ -35,6 +37,7 @@ class GoodsLookActivity : BaseActivity() {
 
     @Subscribe(sticky = true)
     fun onMessageEvent2(fruitBean: NetFruitBean) {
+        this.fruitBean=fruitBean
         objectId = fruitBean.objectId
         val data = fruitBean.serverData
         root!!.tv_title.text = data.title
@@ -55,7 +58,9 @@ class GoodsLookActivity : BaseActivity() {
 
     private fun initView() {
         root!!.ll_coupon_get.setOnClickListener {
-            startActivity(Intent(this, GoodsCouponGetActivity::class.java))
+            val intent=Intent(this, GoodsCouponGetActivity::class.java)
+            intent.putExtra("fruitId",objectId)
+            startActivity(intent)
         }
 
     }
@@ -106,6 +111,11 @@ class GoodsLookActivity : BaseActivity() {
             mango(this, "请先登陆")
             return
         } else {
+            //红点加一
+            val redPointNum =  SharedPreferencesUtils.getInstance().getData("redPointNum",0) as Int
+            SharedPreferencesUtils.getInstance().saveData("redPointNum", redPointNum+1)
+            EventBus.getDefault().post(MainActivity.RedPointMessageEvent())
+
             val userPhone = SharedPreferencesUtils.getInstance().getData("phoneNumber", "") as String
             AddGoodsToShopCartCloud(this, userPhone, objectId)
             mango(this, "已添加")
@@ -113,7 +123,14 @@ class GoodsLookActivity : BaseActivity() {
     }
 
     //现在就买
-    fun buyNow(view: View) {}
+    fun buyNow(view: View) {
+        val serverData=fruitBean!!.serverData
+        val ordersList= ArrayList<OrderFormBean.ServerDataBean>();
+        val bean=OrderFormBean.ServerDataBean(serverData.price,objectId,serverData.title,serverData.imageUrl,0,"")
+        ordersList.add(bean)
+        EventBus.getDefault().postSticky(ordersList)
+        startActivity(Intent(this, OrderFormCreateActivity::class.java))
+    }
 
     override fun onStop() {
         super.onStop()

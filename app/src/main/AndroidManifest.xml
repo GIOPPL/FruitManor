@@ -31,8 +31,12 @@
         <activity android:name=".view.activity.CouponActivity"/>
         <activity android:name=".view.activity.GoodsLookActivity"/>
         <activity android:name=".view.activity.ShopCartActivity"/>
-        <activity android:name=".view.activity.PaymentActivity"/>
+        <activity android:name=".view.activity.UpdateUserInfoActivity"/>
         <activity android:name=".view.activity.GoodsCouponGetActivity"/>
+        <activity android:name=".view.activity.OrderFormCreateActivity" />
+        <activity android:name=".view.activity.OrderFormAllSeeActivity" />
+        <activity android:name=".view.activity.OrderFormWaitPayActivity" />
+        <activity android:name=".view.activity.SearchGoodsActivity" />
     </application>
 
 

@@ -14,8 +14,8 @@ import com.gioppl.fruitmanor.sql.MyDbHelper
 import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.RefreshableViewList
 import com.gioppl.fruitmanor.view.adapt.CouponAdapt
-
-class CouponActivity : BaseActivity() {
+//订单表的界面
+class OrderFormsActivity : BaseActivity(){
     private var rvl: RefreshableViewList? = null
     private var mList = ArrayList<CouponBean>()
     private var mRV: RecyclerView? = null
@@ -28,7 +28,7 @@ class CouponActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon)
-        mDbHelper = MyApplication.getInstance().dbHelper
+        mDbHelper= MyApplication.getInstance().dbHelper
         initView()
         initData()
     }
@@ -36,18 +36,18 @@ class CouponActivity : BaseActivity() {
     private fun initData() {
         getGoodsFromDb()
     }
-
-    private fun getGoodsFromDb() {
+    private  fun getGoodsFromDb(){
         mList.clear()
-        val sql = "select * from ${Table.CouponTable.TABLE_NAME}"
+        val sql="select * from ${Table.CouponTable.TABLE_NAME}"
+        strawberry(this,"查询数据库的优惠券：$sql")
         val mCursor: Cursor = mDbHelper!!.exeSql(sql)
         while (mCursor.moveToNext()) {
-            val bean = CouponBean()
-            bean.goods_id = mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.GOODS_ID))
-            bean.reduce_money = mCursor.getInt(mCursor.getColumnIndex(Table.CouponTable.REDUCE_MONEY))
-            bean.imageUrl = mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.IMAGE_URL))
-            bean.title = mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.TITLE))
-            bean.endTime = mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.END_TIME))
+            val bean= CouponBean()
+            bean.goods_id=mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.GOODS_ID))
+            bean.reduce_money=mCursor.getInt(mCursor.getColumnIndex(Table.CouponTable.REDUCE_MONEY))
+            bean.imageUrl=mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.IMAGE_URL))
+            bean.title=mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.TITLE))
+            bean.endTime=mCursor.getString(mCursor.getColumnIndex(Table.CouponTable.END_TIME))
             mList.add(bean)
         }
         mAdapt!!.notifyDataSetChanged()
@@ -58,16 +58,17 @@ class CouponActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         mRV!!.layoutManager = layoutManager
         mRV!!.setHasFixedSize(true)
-        mAdapt = CouponAdapt(mList, this, object : CouponAdapt.CouponClickCallBack {
+        mAdapt = CouponAdapt(mList, this, object : CouponAdapt.CouponClickCallBack{
             override fun lookDescription(position: Int) {
 
             }
         })
-        mRV!!.adapter = mAdapt
-        mRV!!.itemAnimator = DefaultItemAnimator()
+        mRV!!.setAdapter(mAdapt)
+        mRV!!.setItemAnimator(DefaultItemAnimator())
     }
 
     fun back(view: View) {
         finish()
     }
+
 }

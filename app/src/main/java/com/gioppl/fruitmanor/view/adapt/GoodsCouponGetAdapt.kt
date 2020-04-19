@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.gioppl.fruitmanor.R
-import com.gioppl.fruitmanor.bean.CouponBean
+import com.gioppl.fruitmanor.bean.CouponCouldBean
 
-class GoodsCouponGetAdapt(private var mList: ArrayList<CouponBean>?, private var context: Context, private var couponClickCallBack: CouponClickCallBack)
+class GoodsCouponGetAdapt(private var mList: ArrayList<CouponCouldBean.ServerDataBean>?, private var context: Context, private var couponClickCallBack: CouponClickCallBack)
     : RecyclerView.Adapter<GoodsCouponGetAdapt.MyCouponHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyCouponHolder(LayoutInflater.from(context).inflate(R.layout.item_goods_coupon_get_rv, parent, false))
 
@@ -46,7 +46,7 @@ class GoodsCouponGetAdapt(private var mList: ArrayList<CouponBean>?, private var
         }
     }
 
-    public fun refreshData(mList: ArrayList<CouponBean>) {
+    public fun refreshData(mList: ArrayList<CouponCouldBean.ServerDataBean>) {
         this.mList!!.clear();
         this.mList!!.addAll(mList);
     }

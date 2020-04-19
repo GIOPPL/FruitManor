@@ -1,6 +1,5 @@
 package com.gioppl.fruitmanor.net;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -11,7 +10,6 @@ import com.avos.avoscloud.CloudQueryCallback;
 import com.gioppl.fruitmanor.MyApplication;
 import com.gioppl.fruitmanor.bean.CouponCouldBean;
 import com.gioppl.fruitmanor.sql.MyDbHelper;
-import com.gioppl.fruitmanor.sql.Table;
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils;
 import com.gioppl.fruitmanor.view.activity.BaseActivity;
 import com.google.gson.Gson;
@@ -21,60 +19,41 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchCouponCould {
+public class SearchCouponForFruitCould {
     private Context mContext;
     private MyDbHelper mDbHelper;
-    public SearchCouponCould(Context mContext){
+    private CouponsBack couponsBack;
+    public SearchCouponForFruitCould(Context mContext,String goods_id,CouponsBack couponsBack){
         this.mContext=mContext;
+        this.couponsBack=couponsBack;
         mDbHelper= MyApplication.getInstance().getDbHelper();
-        getData();
+        getData(goods_id);
     }
-    public void getData(){
-        String user= (String) SharedPreferencesUtils.getInstance().getData("phoneNumber","");
-        String cql="select * from Coupon where user ='"+user+"'";
+    public void getData(String goods_id){
+        String cql="select * from Coupon where goods_id ='"+goods_id+"' and user = '0'";
         AVQuery.doCloudQueryInBackground(cql, new CloudQueryCallback<AVCloudQueryResult>() {
             @Override
             public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                 if (e!=null){
-                    BaseActivity.PineApple(this,"获取优惠券信息失败："+e.getMessage()+"--"+e.getCode());
+                    BaseActivity.PineApple(this,"获取单个商品优惠券信息失败："+e.getMessage()+"--"+e.getCode());
                 }else {
                     SQLiteDatabase db =mDbHelper.getWritableDatabase();
-                    clearDb(db);
-                    BaseActivity.Strawberry(this,"获取优惠券信息成功");
+                    BaseActivity.Strawberry(this,"获取单个商品优惠券信息成功");
                     String s=avCloudQueryResult.getResults().toString();
                     ArrayList<CouponCouldBean> beanList=formatCouponDatas(s);
                     SharedPreferencesUtils.getInstance().saveData("couponNum",beanList.size());
-                    saveToDb(beanList,db);
+                    couponsBack.couponsBack(beanList);
                 }
             }
         });
-    }
-    private void clearDb(SQLiteDatabase db){
-        String sql="delete from "+Table.CouponTable.TABLE_NAME;
-        db.execSQL(sql);
-    }
-
-    private void saveToDb(ArrayList<CouponCouldBean> beanList,SQLiteDatabase db){
-        db.beginTransaction();
-        for (CouponCouldBean bean:beanList){
-            CouponCouldBean.ServerDataBean data=bean.getServerData();
-            ContentValues values = new ContentValues();
-            values.put(Table.CouponTable.OBJECT_ID,bean.getObjectId());
-            values.put(Table.CouponTable.GOODS_ID,data.getGoods_id());
-            values.put(Table.CouponTable.REDUCE_MONEY,data.getReduce_money());
-            values.put(Table.CouponTable.END_TIME,data.getEndTime());
-            values.put(Table.CouponTable.TITLE,data.getTitle());
-            values.put(Table.CouponTable.IMAGE_URL,data.getImageUrl());
-            db.replace(Table.CouponTable.TABLE_NAME, null, values);
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        db.close();
     }
 
     private ArrayList<CouponCouldBean> formatCouponDatas(String s) {
         Type listType = new TypeToken<List<CouponCouldBean>>() {}.getType();
         Gson gson=new Gson();
         return gson.fromJson(s, listType);
+    }
+    public interface CouponsBack{
+        void couponsBack(ArrayList<CouponCouldBean> coupons);
     }
 }

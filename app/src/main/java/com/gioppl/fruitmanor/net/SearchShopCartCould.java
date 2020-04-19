@@ -26,13 +26,23 @@ import java.util.List;
 public class SearchShopCartCould {
     private Context mContext;
     private ArrayList<ShopCartVagueBean> beanList;
+    private ArrayList<NetFruitBean> describeList = new ArrayList<>();
     private MyDbHelper mDbHelper;
     private SQLiteDatabase db;
     private ShopCartInfoBack shopCartInfoBack;
+    private ShopCartInfoBackAboutData shopCartInfoBackAboutData;
+    private int updateNum=0;
     public SearchShopCartCould(Context mContext,ShopCartInfoBack shopCartInfoBack){
         this.mContext=mContext;
         mDbHelper= MyApplication.getInstance().getDbHelper();
         this.shopCartInfoBack=shopCartInfoBack;
+        getVagueDate();
+    }
+
+    public SearchShopCartCould(Context mContext, ShopCartInfoBackAboutData shopCartInfoBackAboutData) {
+        this.mContext = mContext;
+        mDbHelper = MyApplication.getInstance().getDbHelper();
+        this.shopCartInfoBackAboutData = shopCartInfoBackAboutData;
         getVagueDate();
     }
 
@@ -51,11 +61,13 @@ public class SearchShopCartCould {
                     String s=avCloudQueryResult.getResults().toString();
                     beanList=formatVagueNetDataBean(s);
                     clearDb(db);
+                    int redPointNum = 0;
+                    updateNum=beanList.size();
                     for (ShopCartVagueBean bean:beanList){
                         getDescriptionDate(bean.getServerData().getFruit_id(),bean.getObjectId());
+                        redPointNum++;
                     }
-                    shopCartInfoBack.status(true);
-
+                    SharedPreferencesUtils.getInstance().saveData("redPointNum", redPointNum);
                 }
             }
         });
@@ -72,7 +84,12 @@ public class SearchShopCartCould {
                     BaseActivity.Strawberry(this,"Success:获取购物车细节信息成功");
                     String s=avCloudQueryResult.getResults().toString();
                     NetFruitBean bean=formatDescriptionNetDataBean(s);
+                    describeList.add(bean);
+                    bean.getServerData().setShopId(shopId);
                     saveToDb(bean,shopId);
+                    updateNum--;
+                    if (shopCartInfoBackAboutData != null&&updateNum==0)
+                        shopCartInfoBackAboutData.shopCartInfoBackAboutData(describeList);
                 }
             }
         });
@@ -95,6 +112,10 @@ public class SearchShopCartCould {
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
+        if (shopCartInfoBack != null) {
+            shopCartInfoBack.status(true);
+        }
+
     }
     private void clearDb(SQLiteDatabase db){
         db = mDbHelper.getWritableDatabase();
@@ -115,5 +136,9 @@ public class SearchShopCartCould {
     }
     public interface ShopCartInfoBack{
         void status(boolean isDownLoad);
+    }
+
+    public interface ShopCartInfoBackAboutData {
+        void shopCartInfoBackAboutData(ArrayList<NetFruitBean> beans);
     }
 }

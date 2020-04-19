@@ -8,13 +8,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.avos.avoscloud.AVException
-import com.avos.avoscloud.AVUser
-import com.avos.avoscloud.LogInCallback
 import com.gioppl.fruitmanor.R
+import com.gioppl.fruitmanor.bean.UserInfoBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
+import com.gioppl.fruitmanor.net.UserLoginCould
 import com.gioppl.fruitmanor.tool.LoginStatusChangedTools
-import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 
 
 class LoginActivity : BaseActivity() {
@@ -51,33 +49,51 @@ class LoginActivity : BaseActivity() {
     }
 
     public fun login(view: View) {
-        val user=ed_user!!.text.toString()
+        val phoneNum=ed_user!!.text.toString()
         val password=ed_psw!!.text.toString()
 
-        if (user==""||password=="")
+        if (phoneNum==""||password=="")
             mango(this,"请输入正确的账户或者密码")
-        AVUser.logInInBackground(user, password, object : LogInCallback<AVUser>() {
-            override fun done(user: AVUser?, e: AVException?) {
-                if (e==null){
-                    SharedPreferencesUtils.getInstance().saveData("nickName",user!!.get("nickName")as String)
-                    SharedPreferencesUtils.getInstance().saveData("imageUrl",user.get("imageUrl")as String)
-                    SharedPreferencesUtils.getInstance().saveData("objectId",user.objectId)
-                    SharedPreferencesUtils.getInstance().saveData("phoneNumber",user.username)
-                    SharedPreferencesUtils.getInstance().saveData("loginStatus",true)
-                    SharedPreferencesUtils.getInstance().saveData("money",user.get("money")as Int)
+        UserLoginCould(this,object : UserLoginCould.NetData{
+            override fun getData(bean: UserInfoBean?) {
+                if (bean==null){
+                    strawberry(this,"登陆失败")
+                    mango(this@LoginActivity,"登陆失败:请检查账号密码是否正确")
+                }else{
+//                    val user=bean.serverData
+//                    SharedPreferencesUtils.getInstance().saveData("nickName",user.nickName)
+//                    SharedPreferencesUtils.getInstance().saveData("imageUrl",user.imageUrl)
+//                    SharedPreferencesUtils.getInstance().saveData("objectId",bean.objectId)
+//                    SharedPreferencesUtils.getInstance().saveData("phoneNumber",user.phoneNumber)
+//                    SharedPreferencesUtils.getInstance().saveData("loginStatus",true)
+//                    SharedPreferencesUtils.getInstance().saveData("money",user.money)
+//                    SharedPreferencesUtils.getInstance().saveData("couponNum",user.couponNum)
+//                    SharedPreferencesUtils.getInstance().saveData("address",user.address)
+//                    SharedPreferencesUtils.getInstance().saveData("password",user.password)
 
                     LoginStatusChangedTools(this@LoginActivity)
                     finish()
-//                    val intent=Intent();
-//                    intent.action= BROADCAST_ACTION_LOGIN_STATUS
-//                    intent.putExtra("LOGIN_STATUS",true)
-//                    sendBroadcast(intent);
-                }else{
-                    strawberry(this,"登陆失败:${e.code}- -${e.message}")
-                    mango(this@LoginActivity,"登陆失败:${e.code}- -${e.message}")
                 }
             }
-        })
+        },phoneNum,password)
+//        AVUser.logInInBackground(phoneNum, password, object : LogInCallback<AVUser>() {
+//            override fun done(user: AVUser?, e: AVException?) {
+//                if (e==null){
+//                    SharedPreferencesUtils.getInstance().saveData("nickName",user!!.get("nickName")as String)
+//                    SharedPreferencesUtils.getInstance().saveData("imageUrl",user.get("imageUrl")as String)
+//                    SharedPreferencesUtils.getInstance().saveData("objectId",user.objectId)
+//                    SharedPreferencesUtils.getInstance().saveData("phoneNumber",user.username)
+//                    SharedPreferencesUtils.getInstance().saveData("loginStatus",true)
+//                    SharedPreferencesUtils.getInstance().saveData("money",user.get("money")as Int)
+//
+//                    LoginStatusChangedTools(this@LoginActivity)
+//                    finish()
+//                }else{
+//                    strawberry(this,"登陆失败:${e.code}- -${e.message}")
+//                    mango(this@LoginActivity,"登陆失败:${e.code}- -${e.message}")
+//                }
+//            }
+//        })
     }
     public fun register(view: View) {
         startActivity(Intent(this@LoginActivity,RegisterActivity::class.java))
