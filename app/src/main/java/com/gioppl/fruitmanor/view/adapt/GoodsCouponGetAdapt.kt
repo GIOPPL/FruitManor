@@ -23,6 +23,7 @@ class GoodsCouponGetAdapt(private var mList: ArrayList<CouponCouldBean.ServerDat
         holder.tv_money!!.text = "￥${bean.reduce_money}"
         val uri = Uri.parse(bean.imageUrl)
         holder.sim_cherry!!.setImageURI(uri)
+        holder.tv_endTime!!.text="截止日期："+bean.endTime
         holder.tv_get!!.setOnClickListener{
             couponClickCallBack.getCouponMsg(position)
         }

@@ -15,12 +15,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFruitMassageCould {
+public class SearchFruitAllCould {
     private NetData mCircleData;
     private Context mContext;
     private ArrayList<NetFruitBean> beanList;
 
-    public SearchFruitMassageCould(Context mContext, NetData mCircleData){
+    public SearchFruitAllCould(Context mContext, NetData mCircleData){
         this.mContext=mContext;
         this.mCircleData=mCircleData;
     }

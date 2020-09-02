@@ -1,5 +1,6 @@
 package com.gioppl.fruitmanor.view.activity
 
+import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.view.View
@@ -9,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.MyApplication
 import com.gioppl.fruitmanor.R
 import com.gioppl.fruitmanor.bean.CouponBean
+import com.gioppl.fruitmanor.bean.NetFruitBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
+import com.gioppl.fruitmanor.net.SearchFruitSingleCould
 import com.gioppl.fruitmanor.sql.MyDbHelper
 import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.RefreshableViewList
 import com.gioppl.fruitmanor.view.adapt.CouponAdapt
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class CouponActivity : BaseActivity() {
     private var rvl: RefreshableViewList? = null
@@ -60,13 +65,18 @@ class CouponActivity : BaseActivity() {
         mRV!!.setHasFixedSize(true)
         mAdapt = CouponAdapt(mList, this, object : CouponAdapt.CouponClickCallBack {
             override fun lookDescription(position: Int) {
-
+                SearchFruitSingleCould(this@CouponActivity,mList[position].goods_id, SearchFruitSingleCould.NetData { beanList ->
+                    EventBus.getDefault().postSticky(beanList!!.get(position))
+                    startActivity(Intent(this@CouponActivity,GoodsLookActivity::class.java))
+                })
             }
         })
         mRV!!.adapter = mAdapt
         mRV!!.itemAnimator = DefaultItemAnimator()
     }
-
+    @Subscribe(sticky = true)
+    fun onMessageEvent2(fruitBean : NetFruitBean) {
+    }
     fun back(view: View) {
         finish()
     }

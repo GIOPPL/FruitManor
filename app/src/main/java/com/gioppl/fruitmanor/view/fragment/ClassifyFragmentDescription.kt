@@ -17,10 +17,11 @@ import com.gioppl.fruitmanor.animation.ShoppingCartAnimation
 import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.bean.NetFruitBean
 import com.gioppl.fruitmanor.net.AddGoodsToShopCartCloud
-import com.gioppl.fruitmanor.net.SearchFruitMassageCould
+import com.gioppl.fruitmanor.net.SearchFruitAllCould
 import com.gioppl.fruitmanor.tool.RefreshableViewList
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 import com.gioppl.fruitmanor.view.activity.BaseActivity
+import com.gioppl.fruitmanor.view.activity.GoodsLookActivity
 import com.gioppl.fruitmanor.view.activity.LoginActivity
 import com.gioppl.fruitmanor.view.activity.MainActivity
 import com.gioppl.fruitmanor.view.adapt.ClassifyDescriptionAdapt
@@ -31,6 +32,7 @@ class ClassifyFragmentDescription() : Fragment(), ClassifyDescriptionAdapt.Class
     private var mAdapt: ClassifyDescriptionAdapt? = null
     private val mainList = ArrayList<HomeFruitBean>()
     private var mList = ArrayList<HomeFruitBean>()
+    var moreInfoList= java.util.ArrayList<NetFruitBean>()//包含全部信息的列表
     private var position = 0;
     private var rvl: RefreshableViewList? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -73,10 +75,12 @@ class ClassifyFragmentDescription() : Fragment(), ClassifyDescriptionAdapt.Class
     }
 
     private fun getData() {
-        val leanCouldNet = SearchFruitMassageCould(activity!!, object : SearchFruitMassageCould.NetData {
+        val leanCouldNet = SearchFruitAllCould(activity!!, object : SearchFruitAllCould.NetData {
             override fun getData(beanList: java.util.ArrayList<NetFruitBean>?) {
                 mList.clear();
-                for (i in beanList!!) {
+                moreInfoList.clear()
+                moreInfoList.addAll(beanList!!)
+                for (i in beanList) {
                     val bean = HomeFruitBean(i.serverData.title, i.serverData.subtitle, i.serverData.price.toFloat(),
                             i.serverData.arriveTime, i.serverData.discount, i.serverData.imageUrl,
                             i.serverData.classify, i.serverData.totalSale, i.objectId)
@@ -146,6 +150,7 @@ class ClassifyFragmentDescription() : Fragment(), ClassifyDescriptionAdapt.Class
     }
 
     override fun lookDescription(position: Int) {
-
+        startActivity(Intent(activity!!, GoodsLookActivity::class.java))
+        EventBus.getDefault().postSticky(moreInfoList[position])
     }
 }

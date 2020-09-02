@@ -22,7 +22,7 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:onClick="back"
-                android:src="@mipmap/arraw_left_first_color" />
+                android:src="@mipmap/arrow_left_first_color" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

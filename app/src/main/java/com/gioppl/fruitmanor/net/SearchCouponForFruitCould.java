@@ -10,7 +10,6 @@ import com.avos.avoscloud.CloudQueryCallback;
 import com.gioppl.fruitmanor.MyApplication;
 import com.gioppl.fruitmanor.bean.CouponCouldBean;
 import com.gioppl.fruitmanor.sql.MyDbHelper;
-import com.gioppl.fruitmanor.tool.SharedPreferencesUtils;
 import com.gioppl.fruitmanor.view.activity.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,7 +40,7 @@ public class SearchCouponForFruitCould {
                     BaseActivity.Strawberry(this,"获取单个商品优惠券信息成功");
                     String s=avCloudQueryResult.getResults().toString();
                     ArrayList<CouponCouldBean> beanList=formatCouponDatas(s);
-                    SharedPreferencesUtils.getInstance().saveData("couponNum",beanList.size());
+//                    SharedPreferencesUtils.getInstance().saveData("couponNum",beanList.size());
                     couponsBack.couponsBack(beanList);
                 }
             }

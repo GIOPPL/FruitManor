@@ -7,11 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by LiYuliang on 2017/3/6 0006.
- * SharedPreferences工具类
- *
- * @author LiYuliang
- * @version 2017/11/21
+ * 用XML来存储数据的小型文件
  */
 
 public class SharedPreferencesUtils {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
@@ -34,7 +35,9 @@ class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, priv
                 classifyClickCallBack.addToShopCar(holder.sim_cherry!!,Point(location1[0],location1[1]),position)
             }
         })
-
+        holder.ll_goodsLook!!.setOnClickListener {
+            classifyClickCallBack.lookDescription(position)
+        }
     }
 
     class MyFruitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -43,12 +46,14 @@ class ClassifyDescriptionAdapt(private var mList:ArrayList<HomeFruitBean>?, priv
         var sim_cherry: SimpleDraweeView? = null
         var tv_price: TextView? = null
         var im_add:ImageView? = null
+        var ll_goodsLook: LinearLayout?=null
         init {
             tv_title = itemView.findViewById(R.id.tv_title);
             tv_subtitle = itemView.findViewById(R.id.tv_subtitle)
             tv_price = itemView.findViewById(R.id.tv_price)
             im_add = itemView.findViewById(R.id.im_add)
             sim_cherry = itemView.findViewById(R.id.sim_cherry)
+            ll_goodsLook=itemView.findViewById(R.id.ll_goodsLook)
         }
     }
 

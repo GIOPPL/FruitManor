@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gioppl.fruitmanor.R
 
-
 class ClassifyAdapt(private var mList: ArrayList<ClassifyButtonInfo>, private var context: Context, private val clickBack: ClickBack) : RecyclerView.Adapter<ClassifyAdapt.MyFruitViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyFruitViewHolder(LayoutInflater.from(context).inflate(R.layout.classify_variety_rv_item, parent, false))
 

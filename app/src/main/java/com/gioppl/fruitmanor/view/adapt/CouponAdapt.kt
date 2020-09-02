@@ -26,7 +26,10 @@ class CouponAdapt(private var mList:ArrayList<CouponBean>?, private var context:
         holder.tv_money!!.text="￥${bean.reduce_money}"
         val uri = Uri.parse(bean.imageUrl)
         holder.sim_cherry!!.setImageURI(uri)
-
+        holder.tv_endTime!!.text="截止日期："+bean.endTime
+        holder.ll_coupon!!.setOnClickListener {
+            couponClickCallBack.lookDescription(position)
+        }
     }
 
     class MyCouponHolder(itemView: View): RecyclerView.ViewHolder(itemView){

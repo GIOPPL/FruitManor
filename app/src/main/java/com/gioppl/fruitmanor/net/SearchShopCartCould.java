@@ -63,6 +63,10 @@ public class SearchShopCartCould {
                     clearDb(db);
                     int redPointNum = 0;
                     updateNum=beanList.size();
+                    if(beanList.size()==0){
+                        if (shopCartInfoBackAboutData != null)
+                            shopCartInfoBackAboutData.shopCartInfoBackAboutData(describeList);
+                    }
                     for (ShopCartVagueBean bean:beanList){
                         getDescriptionDate(bean.getServerData().getFruit_id(),bean.getObjectId());
                         redPointNum++;

@@ -20,7 +20,7 @@ import com.gioppl.fruitmanor.bean.HomeFruitBean
 import com.gioppl.fruitmanor.bean.NetFruitBean
 import com.gioppl.fruitmanor.broadcast.MainBroadcastReceiver
 import com.gioppl.fruitmanor.net.AddGoodsToShopCartCloud
-import com.gioppl.fruitmanor.net.SearchFruitMassageCould
+import com.gioppl.fruitmanor.net.SearchFruitAllCould
 import com.gioppl.fruitmanor.sql.Table
 import com.gioppl.fruitmanor.tool.SharedPreferencesUtils
 import com.gioppl.fruitmanor.view.activity.*
@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment(), HomeFruitAdapt.HomeClickCallBack {
     }
 
     private fun getData() {
-        val leanCouldNet = SearchFruitMassageCould(activity!!, object : SearchFruitMassageCould.NetData {
+        val leanCouldNet = SearchFruitAllCould(activity!!, object : SearchFruitAllCould.NetData {
             override fun getData(beanList: java.util.ArrayList<NetFruitBean>?) {
                 moreInfoList.clear()
                 moreInfoList.addAll(beanList!!)

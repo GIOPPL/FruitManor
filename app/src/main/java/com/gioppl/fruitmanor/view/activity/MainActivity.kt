@@ -31,11 +31,12 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)//能看到的东西
         initView()
         initPager()
         PermissionUtils.isGrantExternalRW(this, 1)
     }
+
     private fun initView() {
         vp = findViewById(R.id.vp_main) as BanSlidingViewPager?
         mRadioGroup = findViewById(R.id.rg_main_bottom) as RadioGroup?

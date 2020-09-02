@@ -58,7 +58,7 @@
                 android:visibility="gone"
                 android:layout_marginRight="10dp"
                 android:id="@+id/tv_find_like"
-                android:background="@drawable/rect_first_color"
+                android:background="@drawable/rect_stroke_first_color"
                 android:text="找相似"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"

@@ -132,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="立减2.5元现金券"
+                android:text="立即领现金券"
                 android:textColor="#333333"
                 android:textSize="15sp" />
 
